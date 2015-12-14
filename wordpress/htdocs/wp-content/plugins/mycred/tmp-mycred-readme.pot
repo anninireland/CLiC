@@ -1,0 +1,310 @@
+msgid ""
+msgstr "MIME-Version: 1.0\n"
+
+#. Name.
+msgid "myCRED"
+msgstr ""
+
+#. Short description.
+msgid "myCRED is an adaptive points management system that lets you award / charge your users for interacting with your WordPress powered website."
+msgstr ""
+
+#. Screenshot description.
+msgid "<strong>The Log</strong> - myCRED Logs everything for you. You can browse, search, export, edit or delete log entries."
+msgstr ""
+
+#. Screenshot description.
+msgid "<strong>Add-ons</strong> - Enable only the features you want to use."
+msgstr ""
+
+#. Screenshot description.
+msgid "<strong>Hooks</strong> - Instances where you might want to award or deduct points from users are referred to as a \"hook\"."
+msgstr ""
+
+#. Screenshot description.
+msgid "<strong>Settings</strong> - As of version 1.4 you can create multiple point types!"
+msgstr ""
+
+#. Screenshot description.
+msgid "<strong>Edit Balances</strong> - While browsing your users in the admin area you always adjust their point balances."
+msgstr ""
+
+#. Found in description header.
+msgid "Plugin Support"
+msgstr ""
+
+#. Found in description header.
+msgid "Points"
+msgstr ""
+
+#. Found in description header.
+msgid "Log"
+msgstr ""
+
+#. Found in description header.
+msgid "Awarding or Deducting Points Automatically"
+msgstr ""
+
+#. Found in description header.
+msgid "Third-party plugin Support"
+msgstr ""
+
+#. Found in description header.
+msgid "Add-ons"
+msgstr ""
+
+#. Found in description header.
+msgid "Documentation"
+msgstr ""
+
+#. Found in description header.
+msgid "Support"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Free support is offered  via the <a href=\"http://mycred.me/support/forums/\">myCRED support forum</a>. No support is provided here on the wordpress.org website."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "myCRED is a adaptive points management tool to help you build reward programs, monetize your website or just reward users with points for posting comments or publishing content."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Packed with features, myCRED also supports some of the most popular WordPress plugins like WooCommerce, BuddyPress, Jetpack, Contact Form 7 and <a href=\"http://mycred.me/about/supported-plugins/\">more</a>."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Each user on your WordPress websites gets their own point balance which you can manually <a href=\"http://mycred.me/about/features/easy-manual-adjustments/\">adjust</a> at any time. As of version 1.4, myCRED also supports multiple point types for those who need more then one type of points on their website."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Each time myCRED adds or deducts points from a user, the adjustment is <a href=\"http://mycred.me/about/features/the-log/\">logged</a> in a dedicated log, allowing your users to browse their history. The log is also used to provide you with statistics or enforce limits you set."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "myCRED supports a vast set of ways you can automatically give / take points from a user. Everything from new comments to store purchases. These automatic adjustments are managed by so called Hooks which you can setup in your admin area."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "myCRED supports some of the most <a href=\"http://mycred.me/about/supported-plugins/\">popular plugins</a> for WordPress like BuddyPress, WooCommerce, Jetpack, Contact Form 7 etc. To prevent to much cluttering in the admin area with settings, myCRED will automatically hide settings for plugins that you are not using."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "There is so much more to myCRED then just adjusting balances. The plugin comes with several <a href=\"http://mycred.me/add-ons/\">built-in add-ons</a> which enabled more complex features such as allowing point transfers, buying points for real money, allow payments in stores etc."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "To help fund development of myCRED, I also provide an ever growing set of <a href=\"http://mycred.me/store/\">premium add-ons</a> that brings you even more features or add support for more payment gateways."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "The myCRED <a href=\"http://codex.mycred.me/\">Codex</a> provides a large amount of documentation for users and developers. You can also find installation guides on each add-ons page on the myCRED.me website."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "I provide free technical support via the <a href=\"http://mycred.me/support/forums/\">myCRED website</a>. Support is <strong>NOT</strong> provided here on the wordpress.org support forum. This also means I do not provide support for forks or clones of this plugin."
+msgstr ""
+
+#. Found in installation header.
+msgid "myCRED Guides"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "<a href=\"http://codex.mycred.me/get-started/\">myCRED Codex - Setup Guides</a>"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "<a href=\"http://codex.mycred.me/get-started/install/\">myCRED Codex - Install</a>"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "<a href=\"http://codex.mycred.me/get-started/setup-hooks/\">myCRED Codex - Setup Hooks</a>"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "<a href=\"http://codex.mycred.me/get-started/setup-addons/\">myCRED Codex - Setup Addons</a>"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "<a href=\"http://codex.mycred.me/get-started/multiple-point-types/\">myCRED Codex - Multiple Point Types</a>"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "<a href=\"http://codex.mycred.me/get-started/multisites/\">myCRED Codex - Multisites</a>"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NEW - Added new filter mycred_the_badge for when showing a users badge."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NEW - Added options to the mycred_load_coupons shortocode to change labels."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NEW - Added new shortcode mycred_best_user."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NEW - Removed addon paths from being saved in the database."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "FIX - Removed incorrect usage of get_current_user_id() before init."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "FIX - Visit hook date collision. Thank you onizuka007!"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "FIX - Fixed fatal error in badges functions."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "FIX - Badges checkbox settings were not saved due to the use of the incorrect variable. Thank you Martin for reporting this!"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "FIX - Coupon usage indicator uses __() instead of _n() causing count to always show as 1 time."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "TWEAK - Minor adjustments for WP 4.4"
+msgstr ""
+
+#. Found in changelog paragraph.
+msgid "http://mycred.me/support/changelog/"
+msgstr ""
+
+#. Found in faq header.
+msgid "Does myCRED support Multisite Installations?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Can I as an administrator adjust my users balances?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Does myCRED support Multiple Point Types?"
+msgstr ""
+
+#. Found in faq header.
+msgid "What point formats does myCRED support?"
+msgstr ""
+
+#. Found in faq header.
+msgid "How many point types does myCRED support?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Can users use points to pay for items in my store?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Can myCRED award points for users sharing posts on social media sites?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Can I award points for watching videos?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Can I import / export log entries?"
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "Yep! myCRED also offers you the option to centralize your log or enforce your main sites installation on all sub sites via the \"Master Template\" feature."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "Yes of course. Administrators have full access to all users point types, balances and history."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "Yes! myCRED as of version 1.4 officially supports multiple point types. You can setup an unlimited number of point types with it's own settings, available hooks and log page for each administration. Note that add-ons have limited support. Please consult the myCRED website for more information."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "myCRED supports whole numbers or the use of decimals (max 20 decimal places). You can setup to use both if you use mutliple point types however the default point type must be set to use the highest number of decimal places."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "There is no built-in limit for how many point types you can setup, however, with that being said, I do not recommend more then 5-6 types. Remember that myCRED will add an admin menu for each point type so with large sets of point types, you will have a very long admin menu."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "Yes, myCRED supports WooCommerce, MarketPress and WP E-Commerce straight out of the box. If you want users to pay for event tickets myCRED also supports Events Manger and Event Espresso."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "No. myCRED does not support this but there are WordPress plugins out there that can provide this functionality with support for myCRED."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "Yes. myCRED supports YouTube out of the box and you can purchase the video add-on to add support for Vimeo as well. myCRED uses iframes for videos making video watching possible on portable devices as well."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "myCRED supports importing, exporting, inline editing and manual deletion of log entires as of version 1.4."
+msgstr ""
+
+#. Found in remaining content header.
+msgid "Other Notes"
+msgstr ""
+
+#. Found in remaining content header.
+msgid "Requirements"
+msgstr ""
+
+#. Found in remaining content header.
+msgid "Language Contributors"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "WordPress 3.8 or greater"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "PHP version 5.3 or greater"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "PHP mcrypt library enabled"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "MySQL version 5.0 or greater"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "Swedish - Gabriel S Merovingi"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "French - Chouf1 <a href=\"http://bp-fr.net/\">Dan - BuddyPress France</a>"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "Persian - Mani Akhtar"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "Spanish - Robert Rowshan <a href=\"http://robertrowshan.com\">Website</a>"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "Russian - Skladchik"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "Chinese - suifengtec <a href=\"http://coolwp.com\">Website</a>"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "Portuguese (Brazil) - Guilherme"
+msgstr ""
+
+#. Found in remaining content list item.
+msgid "Japanese - Mochizuki Hiroshi"
+msgstr ""
