@@ -28,10 +28,10 @@ function gg_add_content($content) {
 			<h5 class="ggtext">What would you like to practice? </h5>
 			<form id="gg_menu">
 
-			<a class="click" id="nouns" href="http://localhost/wordpress/challenge/nouns/?' .$ID. '">Nouns</a> 
-			<a class="click" id="verbs" href="http://localhost/wordpress/challenge/verbs/?' .$ID. '">Verbs</a> 
-			<a class="click" id="adjectives" href="http://localhost/wordpress/challenge/adjectives/?' .$ID. '">Adjectives</a> 
-			<a class="click" id="adverbs" href="http://localhost/wordpress/challenge/adverbs/?' .$ID. '">Adverbs</a> 
+			<a class="click" id="nouns" href="http://localhost/wordpress/wpquery/?origin_id=' .$ID. '&game=nouns">Nouns</a> 
+			<a class="click" id="verbs" href="http://localhost/wordpress/wpquery/?origin_id=' .$ID. '&game=verbs">Verbs</a> 
+			<a class="click" id="adjectives" href="http://localhost/wordpress/wpquery/?' .$ID. '">Adjectives</a> 
+			<a class="click" id="adverbs" href="http://localhost/wordpress/wpquery/?' .$ID. '">Adverbs</a> 
 			<br>'
 			;
 
