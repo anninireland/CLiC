@@ -30,8 +30,8 @@ function gg_add_content($content) {
 
 			<a class="click" id="nouns" href="http://localhost/wordpress/wpquery/?origin_id=' .$ID. '&game=nouns">Nouns</a> 
 			<a class="click" id="verbs" href="http://localhost/wordpress/wpquery/?origin_id=' .$ID. '&game=verbs">Verbs</a> 
-			<a class="click" id="adjectives" href="http://localhost/wordpress/wpquery/?' .$ID. '">Adjectives</a> 
-			<a class="click" id="adverbs" href="http://localhost/wordpress/wpquery/?' .$ID. '">Adverbs</a> 
+			<a class="click" id="adjectives" href="http://localhost/wordpress/wpquery/?origin_id=' .$ID. '&game=adjectives">Adjectives</a> 
+			<a class="click" id="adverbs" href="http://localhost/wordpress/wpquery/?origin_id=' .$ID. '&game=adverbs">Adverbs</a> 
 			<br>'
 			;
 

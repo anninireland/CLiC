@@ -13,4 +13,20 @@ Version:        1.0
 	line-height: 1.2 !important; 
 	margin: 1em !important; 
 	padding: 1em !important; 
+	color:white  !important;
+	background:teal;
+}
+
+.ggmain h1
+{
+	font-size: 150%;
+}
+.ggmain h2
+{
+	font-size: 125%;
+}
+
+.findThis 
+{
+	color: red;
 }

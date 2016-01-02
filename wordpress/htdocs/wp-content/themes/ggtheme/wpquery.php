@@ -7,10 +7,6 @@ Template Name: WP_Query Template
 
 get_header(); ?>
 
-
-
-
-
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -36,20 +32,35 @@ get_header(); ?>
 
 		<?php
 		// Start the custom loop.
+
+		// ** Here is the main content of the page ** //
+
 		if ( have_posts() ) : 
 			while ( $query->have_posts() ) : $query->the_post(); ?>
 
-			<div class="ggmain" style="color:white;background:teal;">
+			<div class="ggmain" >
 			
-			<p>You came here from post # <?php echo $origin_id; ?>	</p>
-			<p>You chose <?php echo $game; ?>	</p>
-	
-			<h3><?php the_title(); ?></h3>	
+
+			<h1>Grammar Guru</h1>
+			<h2>Your challenge: Find <span class="findThis">three <?php echo $game; ?></span> in this article.</h2>
+			<p>Click on a word to select it.</p>
+			<br>
+			<h2><?php the_title(); ?></h2>	
+			<br>
 			<?php the_content(); ?>
 
+			<input type="button" value="Help!" /> 
+			<input type="button" value="I'm Done" /> 
+
+			<!-- 
+			<p>You came here from post # <?php echo $origin_id; ?>	</p>
+			<p>You chose <?php echo $game; ?>	</p>
+
 			<form method="post" action=<?php gg_save_record() ?> >
-			Enter your name: <input type="text" name="name"/>
-			<input type="submit" value="Click Me"/>
+			Enter your name: <input type="text" name="name"/> 
+			<input type="submit" value="Click Me"/> 
+			-->
+
 			</form>
 
 			</div> 
@@ -83,6 +94,7 @@ function gg_save_record(){
 	$wpdb->insert($wpdb->prefix . 'gg_practice_results', 
 		array("gg_post" => $origin_id, "type" => $game, "name" => "test"),
 		array("%d", "%s", "%s"));
+	///echo "Saved!";
 }
 
 ?>
