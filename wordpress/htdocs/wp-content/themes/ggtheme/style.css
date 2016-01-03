@@ -26,7 +26,21 @@ Version:        1.0
 	font-size: 125%;
 }
 
+.ggmain span:hover
+{
+	cursor: pointer;
+}
+
 .findThis 
 {
 	color: red;
+}
+
+.highlighted
+{
+	background-color: yellow;
+}
+.results-view {
+  display: none;
+  text-align: center;
 }

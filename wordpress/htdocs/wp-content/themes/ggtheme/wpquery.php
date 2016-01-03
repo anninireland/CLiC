@@ -2,6 +2,7 @@
 /**
 
 Template Name: WP_Query Template
+This is the template for the Grammar Guru game 
 
  */
 
@@ -38,19 +39,28 @@ get_header(); ?>
 		if ( have_posts() ) : 
 			while ( $query->have_posts() ) : $query->the_post(); ?>
 
-			<div class="ggmain" >
-			
+			<div class="ggmain">			
 
 			<h1>Grammar Guru</h1>
 			<h2>Your challenge: Find <span class="findThis">three <?php echo $game; ?></span> in this article.</h2>
-			<p>Click on a word to select it.</p>
-			<br>
-			<h2><?php the_title(); ?></h2>	
-			<br>
-			<?php the_content(); ?>
+			<div class="article-view">
+				<p>Click on a word to select it.</p>
+				<br>
+				<h2><?php the_title(); ?></h2>	
+				<br>
+				<div class="news-content">
+					<p class="news-content"><?php the_content(); ?></p>
 
-			<input type="button" value="Help!" /> 
-			<input type="button" value="I'm Done" /> 
+				</div>
+
+				<input type="button" value="Help!" /> 
+				<input class="doneButton" type="button" value="I'm Done" /> 
+			</div>
+
+			<div class="results-view">
+				<h2>You selected these words: </h2>
+				<ul class="selected-words"></ul>
+			</div>
 
 			<!-- 
 			<p>You came here from post # <?php echo $origin_id; ?>	</p>
@@ -59,9 +69,8 @@ get_header(); ?>
 			<form method="post" action=<?php gg_save_record() ?> >
 			Enter your name: <input type="text" name="name"/> 
 			<input type="submit" value="Click Me"/> 
-			-->
-
 			</form>
+			-->
 
 			</div> 
 
