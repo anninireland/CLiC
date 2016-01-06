@@ -53,7 +53,7 @@ get_header(); ?>
 
 				</div>
 
-				<input type="button" value="Help!" /> 
+				<input class="helpButton" type="button" value="Help!" /> 
 				<input class="doneButton" type="button" value="I'm Done" /> 
 			</div>
 
@@ -61,6 +61,54 @@ get_header(); ?>
 				<h2>You selected these words: </h2>
 				<ul class="selected-words"></ul>
 			</div>
+
+
+
+			<?php 
+			switch ($game) {
+				case "nouns": ?>
+					<div class="help-view">
+						<h3><span class="mark">Nouns</span> are words that name an object or person</h3>
+						<br>
+						<p>The broad <span class="mark">river</span> is flowing swiftly.</p>
+						<input class="closeButton" type="button" value="close" />
+					</div>
+					<?php ;
+					break;
+
+				case "verbs": ?>
+					<div class="help-view">
+						<h3><span class="mark">Verbs</span> are words that tell the state or action of the subject.</h3>
+						<br>
+						<p>The broad river is <span class="mark">flowing</span> swiftly.</p>
+					</div>
+					<?php ;
+					break;
+
+				case "adjectives": ?>
+					<div class="help-view">
+						<h3><span class="mark">Adjectives</span> are words used to describe and give more information about a noun, which could be a person, place or object.</h3>
+						<br>
+						<p>The <span class="mark">large</span> box is on the shelf.</p>
+						<p>She held the <span class="mark">shiny</span> penny.</p>
+						<p>The sun shone <span class="mark">bright</span> in the <span class="mark">blue</span> sky.</p>
+						<p>I have <span class="mark">five</span> books.</p>
+						<p>The <span class="mark">broad</span> river is flowing swiftly.</p>
+					</div> <?php ;
+					break;
+
+				case "adverbs": ?>
+					<div class="help-view">
+						<h3><span class="mark">Adverbs</span> are words that describe or give more information about a verb.</h3>
+						<br>
+						<p>The broad river is flowing <span class="mark">swiftly</span>.</p>
+					</div>
+					<?php ;
+					break;
+			}
+
+			?>
+
 
 			<!-- 
 			<p>You came here from post # <?php echo $origin_id; ?>	</p>

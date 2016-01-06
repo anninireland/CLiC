@@ -38,4 +38,15 @@ $('.doneButton').click(function() {
   $('.results-view').show();
 })
 
+
+// When helpButton is clicked, show the matching help box below the buttons
+$('.helpButton').click(function() {
+  $('.help-view').show();
+})
+
+// When closeButton is clicked, show the matching help box below the buttons
+$('.closeButton').click(function() {
+  $('.help-view').hide();
+})
+
 });

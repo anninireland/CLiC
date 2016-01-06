@@ -10,10 +10,10 @@ Version:        1.0
 
 .ggmain 
 {
-	line-height: 1.2 !important; 
-	margin: 1em !important; 
-	padding: 1em !important; 
-	color:white  !important;
+	line-height: 1.2; 
+	margin: 1em; 
+	padding: 1em; 
+	color:white;
 	background:teal;
 }
 
@@ -40,7 +40,25 @@ Version:        1.0
 {
 	background-color: yellow;
 }
-.results-view {
+.results-view 
+{
   display: none;
   text-align: center;
+}
+
+.help-view
+{
+	border-style: solid;
+	border-width: 2px;
+	border-color: grey;
+	margin: 1em;
+	padding: 1em;
+	color: black;
+
+	display: none;
+}
+
+.mark
+{
+	color: red;
 }
