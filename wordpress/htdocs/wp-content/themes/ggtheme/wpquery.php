@@ -41,6 +41,10 @@ get_header(); ?>
 
 			<div class="ggmain">			
 
+
+
+
+
 			<h1>Grammar Guru</h1>
 			<h2>Your challenge: Find <span class="findThis">three <?php echo $game; ?></span> in this article.</h2>
 			<div class="article-view">
@@ -154,4 +158,65 @@ function gg_save_record(){
 	///echo "Saved!";
 }
 
+?>
+
+<?php
+
+        ob_flush();
+        flush();
+
+// outputs Hello
+// include('\stanford-postagger-2015-04-20\echo.php');
+
+$time_start = microtime(true);
+
+// loads tagger
+include('\PHP-Stanford-NLP\autoload.php');
+
+$pos = new \StanfordNLP\POSTagger(
+  'C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\stanford-postagger-2015-04-20\models\english-left3words-distsim.tagger',
+'C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\stanford-postagger-2015-04-20\stanford-postagger.jar'
+);
+
+$result = $pos->tag(explode(' ', get_the_content() ));
+// print_r($result); // prints readable array data 
+
+$time_now = microtime(true);
+
+$noun_tags = Array ( "NN", "NNS", "NNP", "NNPS");
+$verb_tags = Array ( "VB", "VBD", "VBG", "VBN", "VBP", "VBZ");
+$adjective_tags = Array ( "JJ", "JJR", "JJS");
+$adverb_tags = Array ( "RB", "RBR", "RBS");
+
+echo "Nouns: ";
+$nouns_list = Array();
+
+foreach($result as $word){
+     if ( in_array( $word[1], $noun_tags )){
+     	$nouns_list[] = $word[0];
+     }
+}
+foreach($result as $word){
+     if ( in_array( $word[1], $verb_tags )){
+     	$nouns_list[] = $word[0];
+     }
+}
+foreach($result as $word){
+     if ( in_array( $word[1], $adjective_tags )){
+     	$nouns_list[] = $word[0];
+     }
+}
+foreach($result as $word){
+     if ( in_array( $word[1], $adverb_tags )){
+     	$nouns_list[] = $word[0];
+     }
+}
+
+$time_end = microtime(true);
+$time_to_tag = $time_now - $time_start;
+$time_to_arrays = $time_end - $time_now;
+$time_elapsed = $time_end - $time_start;
+echo "Tagged in: $time_to_tag seconds\n ";
+echo "Arrays in: $time_to_arrays seconds\n ";
+echo "All done in: $time_elapsed seconds\n ";
 ?>
