@@ -174,8 +174,8 @@ $time_start = microtime(true);
 include('\PHP-Stanford-NLP\autoload.php');
 
 $pos = new \StanfordNLP\POSTagger(
-  'C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\stanford-postagger-2015-04-20\models\english-left3words-distsim.tagger',
-'C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\stanford-postagger-2015-04-20\stanford-postagger.jar'
+  '\PHP-Stanford-NLP\stanford-postagger-2015-04-20\models\english-left3words-distsim.tagger',
+'\PHP-Stanford-NLP\stanford-postagger-2015-04-20\stanford-postagger.jar'
 );
 
 $result = $pos->tag(explode(' ', get_the_content() ));

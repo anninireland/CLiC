@@ -1,0 +1,9 @@
+[13-Jan-2016 15:24:14 UTC] PHP Fatal error:  Uncaught exception 'StanfordNLP\Exception' with message 'Model file path does not exist.' in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php:64
+Stack trace:
+#0 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php(34): StanfordNLP\POSTagger->setModel('\\PHP-Stanford-N...')
+#1 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php(179): StanfordNLP\POSTagger->__construct('\\PHP-Stanford-N...', '\\PHP-Stanford-N...')
+#2 C:\xampp\apps\wordpress\htdocs\wp-includes\template-loader.php(89): include('C:\\xampp\\apps\\w...')
+#3 C:\xampp\apps\wordpress\htdocs\wp-blog-header.php(16): require_once('C:\\xampp\\apps\\w...')
+#4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
+#5 {main}
+  thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php on line 64

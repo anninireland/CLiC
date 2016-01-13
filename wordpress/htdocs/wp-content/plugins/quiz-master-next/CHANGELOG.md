@@ -1,3 +1,57 @@
+= 4.6.1 (October 20, 2015) =
+ * Bug fix for rare bug preventing IE usage on a small number of sites
+
+= 4.6.0 (October 20, 2015) =
+ * Adds new dynamic form submission ([Github Issue #206](https://github.com/fpcorso/quiz_master_next/issues/206))
+ * Adds new From email address option ([Github Issue #312](https://github.com/fpcorso/quiz_master_next/issues/312))
+ * Adds new Reply-To admin email option
+ * Fixed timer issue that started timer but prevent access to next page ([Github Issue #302](https://github.com/fpcorso/quiz_master_next/issues/302))
+ * Fixes redirect bug that prevented submissions from saving ([Github Issue #201](https://github.com/fpcorso/quiz_master_next/issues/201))
+ * Fixes required question bug that prevented multiple quizzes/surveys on one page ([Github Issue #304](https://github.com/fpcorso/quiz_master_next/issues/304))
+ * Re-wrote front-end JavaScript to fix a variety of smaller bugs
+ * Renamed several file names and functions to align more with WordPress coding standards
+
+= 4.5.5 (October 1, 2015) =
+ * Adds 4 new style templates to choose from
+ * Fixes Dutch translation ([Github Issue #285](https://github.com/fpcorso/quiz_master_next/issues/285))
+ * Fixes quiz results losing search filters after first page ([Github Issue #293](https://github.com/fpcorso/quiz_master_next/issues/293))
+ * Fixes question drag and drop not working on certain installs ([Github Issue #295](https://github.com/fpcorso/quiz_master_next/issues/295))
+ * Fixes Required? question setting where the Yes or No value did not show when editing ([Github Issue #296](https://github.com/fpcorso/quiz_master_next/issues/296))
+
+= 4.5.4 (September 3, 2015) =
+ * Rebrand as Quiz And Survey Master
+ * Fixes scroll to top pagination bug
+ * Fixes leaderboard widget bug
+
+= 4.5.3 (August 21, 2015) =
+ * Fixed an issue where Quiz Views and Quiz Taken stats in the Quizzes screen was reseting to 1 instead of 0. ([Github Issue #277](https://github.com/fpcorso/quiz_master_next/issues/277))
+
+= 4.5.2 (August 14, 2015) =
+ * Ensured compatibility with Wordpress version 4.3
+ * Fixed an issue when Contact details are set to Required and the user leaves the fields blank the quiz is still allowed to gets submitted in IE. ([Github Issue #270](https://github.com/fpcorso/quiz_master_next/issues/270))
+
+= 4.5.1 (August 12, 2015) =
+ * Fixes parse error on hosts with older PHP versions
+
+= 4.5.0 (August 11, 2015) =
+  * Added a brand new log system to track errors in the plugin. ([Github Issue #233](https://github.com/fpcorso/quiz_master_next/issues/233))
+  * Added the ability to drag and drop questions when creating your quiz. ([Github Issue #235](https://github.com/fpcorso/quiz_master_next/issues/235))
+  * Added new CSS template system for quizzes. ([Github Issue #234](https://github.com/fpcorso/quiz_master_next/issues/234))
+  * Added new classes for Correct/Incorrect Answers. ([Github Issue #228](https://github.com/fpcorso/quiz_master_next/issues/228))
+  * Added ability to sort the results. ([Github Issue #167](https://github.com/fpcorso/quiz_master_next/issues/167))
+  * Added the ability to search quiz results by quiz name, score, time taken, and completion time. ([Github Issue #70](https://github.com/fpcorso/quiz_master_next/issues/70))
+  * Added the ability for developers to show only relevant fields when adding/editing questions on different question types.
+  * Added new register template functions to the API.
+  * Added a new contributor tab to the credits page.
+  * Added a checkbox to the quiz results page to delete results.
+  * Added a brand new review message system.
+  * Bug Fix: Fixed a bug where slashes where appearing with the category name.
+  * Bug Fix: Fixed a timer bug that prevented the timer form working when using pagination.
+
+= 4.4.4 (July 19, 2015) =
+  * Security Fix: Fixed possible sql injection from authenticated users on certificate, email, and leaderboard tabs
+  * Security Fix: Fixed data validation bug on help page, leaderboard shortcode, and quiz shortcode
+
 = 4.4.3 (July 17, 2015) =
   * Security Fix: Fixed possible sql injection from authenticated users on text and tools tabs
 

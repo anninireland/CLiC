@@ -26,10 +26,15 @@
 				args += '&relatedposts_exclude=' + $( '#jp-relatedposts' ).data( 'exclude' );
 			}
 
+			var pathname = locationObject.pathname;
+			if ( '/' !== pathname[0] ) {
+				pathname = '/' + pathname;
+			}
+
 			if ( '' === locationObject.search ) {
-				return locationObject.pathname + '?' + args;
+				return pathname + '?' + args;
 			} else {
-				return locationObject.pathname + locationObject.search + '&' + args;
+				return pathname + locationObject.search + '&' + args;
 			}
 		},
 
@@ -45,7 +50,7 @@
 				'class': classNames,
 				'href': post.url,
 				'title': anchor_title,
-				'rel': 'nofollow',
+				'rel': post.rel,
 				'data-origin': post.url_meta.origin,
 				'data-position': post.url_meta.position
 			});
@@ -65,6 +70,10 @@
 				var anchor = self.getAnchor( post, 'jp-relatedposts-post-a' );
 				var classes = 'jp-relatedposts-post jp-relatedposts-post' + index;
 
+				if ( post.classes.length > 0 ) {
+					classes += ' ' + post.classes.join( ' ' );
+				}
+
 				html += '<p class="' + classes + '" data-post-id="' + post.id + '" data-post-format="' + post.format + '">';
 				html += '<span class="jp-relatedposts-post-title">' + anchor[0] + post.title + anchor[1] + '</span>';
 				html += '<span class="jp-relatedposts-post-date">' + post.date + '</span>';
@@ -81,6 +90,11 @@
 			$.each( posts, function( index, post ) {
 				var anchor = self.getAnchor( post, 'jp-relatedposts-post-a' );
 				var classes = 'jp-relatedposts-post jp-relatedposts-post' + index;
+
+				if ( post.classes.length > 0 ) {
+					classes += ' ' + post.classes.join( ' ' );
+				}
+
 				if ( ! post.img.src ) {
 					classes += ' jp-relatedposts-post-nothumbs';
 				} else {
@@ -95,7 +109,7 @@
 					html += anchor_overlay[0] + anchor_overlay[1];
 				}
 				html += '<h4 class="jp-relatedposts-post-title">' + anchor[0] + post.title + anchor[1] + '</h4>';
-				html += '<p class="jp-relatedposts-post-excerpt">' + post.excerpt + '</p>';
+				html += '<p class="jp-relatedposts-post-excerpt">' + $( '<p>' ).text( post.excerpt ).html() + '</p>';
 				html += '<p class="jp-relatedposts-post-date">' + post.date + '</p>';
 				html += '<p class="jp-relatedposts-post-context">' + post.context + '</p>';
 				html += '</div>';
@@ -131,10 +145,15 @@
 			args += '&relatedposts_origin=' + $( anchor ).data( 'origin' );
 			args += '&relatedposts_position=' + $( anchor ).data( 'position' );
 
+			var pathname = anchor.pathname;
+			if ( '/' !== pathname[0] ) {
+				pathname = '/' + pathname;
+			}
+
 			if ( '' === anchor.search ) {
-				return anchor.pathname + '?' + args;
+				return pathname + '?' + args;
 			} else {
-				return anchor.pathname + anchor.search + '&' + args;
+				return pathname + anchor.search + '&' + args;
 			}
 		},
 

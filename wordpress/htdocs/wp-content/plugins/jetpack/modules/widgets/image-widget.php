@@ -21,6 +21,7 @@ class Jetpack_Image_Widget extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			'image',
+			/** This filter is documented in modules/widgets/facebook-likebox.php */
 			apply_filters( 'jetpack_widget_name', esc_html__( 'Image', 'jetpack' ) ),
 			array(
 				'classname' => 'widget_image',
@@ -60,6 +61,7 @@ class Jetpack_Image_Widget extends WP_Widget {
 			'img_url' => ''
 		) );
 
+		/** This filter is documented in core/src/wp-includes/default-widgets.php */
 		$title = apply_filters( 'widget_title', $instance['title'] );
 
 		if ( $title )
@@ -81,13 +83,17 @@ class Jetpack_Image_Widget extends WP_Widget {
 			$output .= '/>';
 			if ( '' != $instance['link'] && ! empty( $instance['link_target_blank'] ) )
 				$output = '<a target="_blank" href="' . esc_attr( $instance['link'] ) . '">' . $output . '</a>';
-			if ( '' != $instance['link'] )
+			if ( '' != $instance['link'] && empty( $instance['link_target_blank'] ) )
 				$output = '<a href="' . esc_attr( $instance['link'] ) . '">' . $output . '</a>';
 			if ( '' != $instance['caption'] ) {
-				$caption = apply_filters( 'widget_text', $instance['caption'] );
-				$output = '[caption align="align' .  esc_attr( $instance['align'] ) . '" width="' . esc_attr( $instance['img_width'] ) .'"]' . $output . ' ' . $caption . '[/caption]'; // wp_kses_post caption on update
+				/** This filter is documented in core/src/wp-includes/default-widgets.php */
+				$caption   = apply_filters( 'widget_text', $instance['caption'] );
+				$img_width = ( ! empty( $instance['img_width'] ) ? 'style="width: ' . esc_attr( $instance['img_width'] ) .'px"' : '' );
+				$output    = '<figure ' . $img_width .' class="wp-caption align' .  esc_attr( $instance['align'] ) . '">
+					' . $output . '
+					<figcaption class="wp-caption-text">' . $caption . '</figcaption>
+				</figure>'; // wp_kses_post caption on update
 			}
-
 			echo '<div class="jetpack-image-container">' . do_shortcode( $output ) . '</div>';
 		}
 
@@ -155,8 +161,8 @@ class Jetpack_Image_Widget extends WP_Widget {
 		$link_target_blank = checked( $instance['link_target_blank'], true, false );
 
 		if ( !empty( $instance['img_url'] ) ) {
-			// Download the url to a local temp file and then process it with getimagesize so we can filter out domains which are blocking us
-			$tmp_file = download_url( $instance['img_url'], 30 );
+			// Download the url to a local temp file and then process it with getimagesize so we can optimize browser layout
+			$tmp_file = download_url( $instance['img_url'], 10 );
 			if ( ! is_wp_error( $tmp_file ) ) {
 				$size = getimagesize( $tmp_file );
 

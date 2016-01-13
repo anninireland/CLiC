@@ -8,7 +8,7 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
  		'description'       => '(string) Tagline or description of site',
  		'URL'               => '(string) Full URL to the site',
 		'lang'              => '(string) Primary language code of the site',
-		'settings'          => '(array) An array of options/settings for the blog. Only viewable by users with access to the site.',
+		'settings'          => '(array) An array of options/settings for the blog. Only viewable by users with post editing rights to the site.',
 	);
 
 	// GET /sites/%s/settings
@@ -22,7 +22,7 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			$this->load_theme_functions();
 		}
-		
+
 		if ( ! is_user_logged_in() ) {
 			return new WP_Error( 'Unauthorized', 'You must be logged-in to manage settings.', 401 );
 		} else if ( ! current_user_can( 'manage_options' ) ) {
@@ -30,6 +30,15 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 		}
 
 		if ( 'GET' === $this->api->method ) {
+			/**
+			 * Fires on each GET request to a specific endpoint.
+			 *
+			 * @module json-api
+			 *
+			 * @since 3.2.0
+			 *
+			 * @param string sites.
+			 */
 			do_action( 'wpcom_json_api_objects', 'sites' );
 			return $this->get_settings_response();
 		} else if ( 'POST' === $this->api->method ) {
@@ -76,6 +85,8 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 
 		$response_format = self::$site_format;
 		$blog_id = (int) $this->api->get_blog_id_for_output();
+		/** This filter is documented in class.json-api-endpoints.php */
+		$is_jetpack = true === apply_filters( 'is_jetpack_site', false, $blog_id );
 
 		foreach ( array_keys( $response_format ) as $key ) {
 			switch ( $key ) {
@@ -110,6 +121,16 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 					)
 				);
 
+				$eventbrite_api_token = (int) get_option( 'eventbrite_api_token' );
+				if ( 0 === $eventbrite_api_token ) {
+					$eventbrite_api_token = null;
+				}
+
+				$holiday_snow = false;
+				if ( function_exists( 'jetpack_holiday_snow_option_name' ) ) {
+					$holiday_snow = (bool) get_option( jetpack_holiday_snow_option_name() );
+				}
+
 				$response[$key] = array(
 
 					// also exists as "options"
@@ -124,7 +145,7 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 					'jetpack_relatedposts_enabled' => (bool) $jetpack_relatedposts_options[ 'enabled' ],
 					'jetpack_relatedposts_show_headline' => (bool) $jetpack_relatedposts_options[ 'show_headline' ],
 					'jetpack_relatedposts_show_thumbnails' => (bool) $jetpack_relatedposts_options[ 'show_thumbnails' ],
-					'default_category'        => get_option('default_category'),
+					'default_category'        => (int) get_option('default_category'),
 					'post_categories'         => (array) $post_categories,
 					'default_post_format'     => get_option( 'default_post_format' ),
 					'default_pingback_flag'   => (bool) get_option( 'default_pingback_flag' ),
@@ -153,6 +174,10 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 					'disabled_likes'          => (bool) get_option( 'disabled_likes' ),
 					'disabled_reblogs'        => (bool) get_option( 'disabled_reblogs' ),
 					'jetpack_comment_likes_enabled' => (bool) get_option( 'jetpack_comment_likes_enabled', false ),
+					'twitter_via'             => (string) get_option( 'twitter_via' ),
+					'jetpack-twitter-cards-site-tag' => (string) get_option( 'jetpack-twitter-cards-site-tag' ),
+					'eventbrite_api_token'    => $eventbrite_api_token,
+					'holidaysnow'             => $holiday_snow
 				);
 
 				if ( class_exists( 'Sharing_Service' ) ) {
@@ -162,6 +187,10 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 					$response[ $key ]['sharing_label'] = (string) $sharing['sharing_label'];
 					$response[ $key ]['sharing_show'] = (array) $sharing['show'];
 					$response[ $key ]['sharing_open_links'] = (string) $sharing['open_links'];
+				}
+
+				if ( function_exists( 'jetpack_protect_format_whitelist' ) ) {
+					$response[ $key ]['jetpack_protect_whitelist'] = jetpack_protect_format_whitelist();
 				}
 
 				if ( ! current_user_can( 'edit_posts' ) )
@@ -183,7 +212,16 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 
 		// $this->input() retrieves posted arguments whitelisted and casted to the $request_format
 		// specs that get passed in when this class is instantiated
-		$input = $this->input();
+		/**
+		 * Filters the settings to be updated on the site.
+		 *
+		 * @module json-api
+		 *
+		 * @since 3.6.0
+		 *
+		 * @param array $input Associative array of site settings to be updated.
+		 */
+		$input = apply_filters( 'rest_api_update_site_settings', $this->input() );
 
 		$jetpack_relatedposts_options = array();
 		$sharing_options = array();
@@ -205,6 +243,15 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 					if ( update_option( $key, $coerce_value ) ) {
 						$updated[ $key ] = $value;
 					};
+					break;
+				case 'jetpack_protect_whitelist':
+					if ( function_exists( 'jetpack_protect_save_whitelist' ) ) {
+						$result = jetpack_protect_save_whitelist( $value );
+						if ( is_wp_error( $result ) ) {
+							return $result;
+						}
+						$updated[ $key ] = jetpack_protect_format_whitelist();
+					}
 					break;
 				case 'jetpack_sync_non_public_post_stati':
 					Jetpack_Options::update_option( 'sync_non_public_post_stati', $value );
@@ -241,7 +288,7 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 					}
 					break;
 				case 'wga':
-					if ( ! isset( $value['code'] ) || ! preg_match( '/^UA-[\d-]+$/', $value['code'] ) ) {
+					if ( ! isset( $value['code'] ) || ! preg_match( '/^$|^UA-[\d-]+$/i', $value['code'] ) ) {
 						return new WP_Error( 'invalid_code', 'Invalid UA ID' );
 					}
 					$wga = get_option( 'wga', array() );
@@ -249,6 +296,14 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 					if ( update_option( 'wga', $wga ) ) {
 						$updated[ $key ] = $value;
 					}
+
+					$enabled_or_disabled = $wga['code'] ? 'enabled' : 'disabled';
+
+					/** This action is documented in modules/widgets/social-media-icons.php */
+					do_action( 'jetpack_bump_stats_extras', 'google-analytics', $enabled_or_disabled );
+
+					$business_plugins = WPCOM_Business_Plugins::instance();
+					$business_plugins->activate_plugin( 'wp-google-analytics' );
 					break;
 
 				case 'jetpack_comment_likes_enabled':
@@ -268,6 +323,30 @@ class WPCOM_JSON_API_Site_Settings_Endpoint extends WPCOM_JSON_API_Endpoint {
 				case 'sharing_label':
 					$sharing_options[ $key ] = $value;
 					break;
+
+				// Keyring token option
+				case 'eventbrite_api_token':
+					// These options can only be updated for sites hosted on WordPress.com
+					if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+						if ( empty( $value ) || WPCOM_JSON_API::is_falsy( $value ) ) {
+							if ( delete_option( $key ) ) {
+								$updated[ $key ] = null;
+							}
+						} else if ( update_option( $key, $value ) ) {
+							$updated[ $key ] = (int) $value;
+						}
+					}
+					break;
+
+				case 'holidaysnow':
+					if ( empty( $value ) || WPCOM_JSON_API::is_falsy( $value ) ) {
+						if ( function_exists( 'jetpack_holiday_snow_option_name' ) && delete_option( jetpack_holiday_snow_option_name() ) ) {
+							$updated[ $key ] = false;
+						}
+ 					} else if ( function_exists( 'jetpack_holiday_snow_option_name' ) && update_option( jetpack_holiday_snow_option_name(), 'letitsnow' ) ) {
+						$updated[ $key ] = true;
+ 					}
+ 					break;
 
 				// no worries, we've already whitelisted and casted arguments above
 				default:
