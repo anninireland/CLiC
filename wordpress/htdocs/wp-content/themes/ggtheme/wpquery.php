@@ -162,22 +162,21 @@ function gg_save_record(){
 
 <?php
 
-        ob_flush();
-        flush();
 
-// outputs Hello
-// include('\stanford-postagger-2015-04-20\echo.php');
+
 
 $time_start = microtime(true);
 
+// sets DIR path variable
+$dir = dirname(__FILE__);
 // loads tagger
-include('\PHP-Stanford-NLP\autoload.php');
-
+include($dir.'/PHP-Stanford-NLP/autoload.php');
+// creates tagger
 $pos = new \StanfordNLP\POSTagger(
-  '\PHP-Stanford-NLP\stanford-postagger-2015-04-20\models\english-left3words-distsim.tagger',
-'\PHP-Stanford-NLP\stanford-postagger-2015-04-20\stanford-postagger.jar'
+  ($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/models/english-left3words-distsim.tagger'),
+($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/stanford-postagger.jar')
 );
-
+// calls tagger to tag the_content 
 $result = $pos->tag(explode(' ', get_the_content() ));
 // print_r($result); // prints readable array data 
 

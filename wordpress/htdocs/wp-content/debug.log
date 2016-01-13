@@ -7,3 +7,72 @@ Stack trace:
 #4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
 #5 {main}
   thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php on line 64
+[13-Jan-2016 15:39:40 UTC] PHP Fatal error:  Uncaught exception 'StanfordNLP\Exception' with message 'Model file path does not exist.' in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php:64
+Stack trace:
+#0 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php(34): StanfordNLP\POSTagger->setModel('\\PHP-Stanford-N...')
+#1 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php(179): StanfordNLP\POSTagger->__construct('\\PHP-Stanford-N...', '\\PHP-Stanford-N...')
+#2 C:\xampp\apps\wordpress\htdocs\wp-includes\template-loader.php(89): include('C:\\xampp\\apps\\w...')
+#3 C:\xampp\apps\wordpress\htdocs\wp-blog-header.php(16): require_once('C:\\xampp\\apps\\w...')
+#4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
+#5 {main}
+  thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php on line 64
+[13-Jan-2016 15:40:08 UTC] PHP Fatal error:  Uncaught exception 'StanfordNLP\Exception' with message 'Model file path does not exist.' in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php:64
+Stack trace:
+#0 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php(34): StanfordNLP\POSTagger->setModel('\\PHP-Stanford-N...')
+#1 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php(179): StanfordNLP\POSTagger->__construct('\\PHP-Stanford-N...', '\\PHP-Stanford-N...')
+#2 C:\xampp\apps\wordpress\htdocs\wp-includes\template-loader.php(89): include('C:\\xampp\\apps\\w...')
+#3 C:\xampp\apps\wordpress\htdocs\wp-blog-header.php(16): require_once('C:\\xampp\\apps\\w...')
+#4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
+#5 {main}
+  thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php on line 64
+[13-Jan-2016 15:45:29 UTC] PHP Fatal error:  Uncaught exception 'StanfordNLP\Exception' with message 'Model file path does not exist.' in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php:64
+Stack trace:
+#0 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php(34): StanfordNLP\POSTagger->setModel('\\PHP-Stanford-N...')
+#1 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php(179): StanfordNLP\POSTagger->__construct('\\PHP-Stanford-N...', '\\PHP-Stanford-N...')
+#2 C:\xampp\apps\wordpress\htdocs\wp-includes\template-loader.php(89): include('C:\\xampp\\apps\\w...')
+#3 C:\xampp\apps\wordpress\htdocs\wp-blog-header.php(16): require_once('C:\\xampp\\apps\\w...')
+#4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
+#5 {main}
+  thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php on line 64
+[13-Jan-2016 16:03:22 UTC] PHP Fatal error:  Uncaught exception 'StanfordNLP\Exception' with message 'Model file path does not exist.' in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php:64
+Stack trace:
+#0 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php(34): StanfordNLP\POSTagger->setModel('/PHP-Stanford-N...')
+#1 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php(176): StanfordNLP\POSTagger->__construct('/PHP-Stanford-N...', '/PHP-Stanford-N...')
+#2 C:\xampp\apps\wordpress\htdocs\wp-includes\template-loader.php(89): include('C:\\xampp\\apps\\w...')
+#3 C:\xampp\apps\wordpress\htdocs\wp-blog-header.php(16): require_once('C:\\xampp\\apps\\w...')
+#4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
+#5 {main}
+  thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php on line 64
+[13-Jan-2016 16:04:10 UTC] PHP Fatal error:  Uncaught exception 'StanfordNLP\Exception' with message 'Model file path does not exist.' in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php:64
+Stack trace:
+#0 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php(34): StanfordNLP\POSTagger->setModel('/PHP-Stanford-N...')
+#1 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php(176): StanfordNLP\POSTagger->__construct('/PHP-Stanford-N...', '/PHP-Stanford-N...')
+#2 C:\xampp\apps\wordpress\htdocs\wp-includes\template-loader.php(89): include('C:\\xampp\\apps\\w...')
+#3 C:\xampp\apps\wordpress\htdocs\wp-blog-header.php(16): require_once('C:\\xampp\\apps\\w...')
+#4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
+#5 {main}
+  thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php on line 64
+[13-Jan-2016 16:08:25 UTC] PHP Warning:  include(C:\xampp\apps\wordpress\htdocs\wp-content\themes/PHP-Stanford-NLP/autoload.php): failed to open stream: No such file or directory in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php on line 171
+[13-Jan-2016 16:08:25 UTC] PHP Warning:  include(): Failed opening 'C:\xampp\apps\wordpress\htdocs\wp-content\themes/PHP-Stanford-NLP/autoload.php' for inclusion (include_path='.;C:\xampp\php\PEAR') in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php on line 171
+[13-Jan-2016 16:08:25 UTC] PHP Fatal error:  Class 'StanfordNLP\POSTagger' not found in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php on line 173
+[13-Jan-2016 16:09:35 UTC] PHP Fatal error:  Uncaught exception 'StanfordNLP\Exception' with message 'Model file path does not exist.' in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php:64
+Stack trace:
+#0 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php(34): StanfordNLP\POSTagger->setModel('/PHP-Stanford-N...')
+#1 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php(176): StanfordNLP\POSTagger->__construct('/PHP-Stanford-N...', '/PHP-Stanford-N...')
+#2 C:\xampp\apps\wordpress\htdocs\wp-includes\template-loader.php(89): include('C:\\xampp\\apps\\w...')
+#3 C:\xampp\apps\wordpress\htdocs\wp-blog-header.php(16): require_once('C:\\xampp\\apps\\w...')
+#4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
+#5 {main}
+  thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php on line 64
+[13-Jan-2016 16:11:13 UTC] PHP Fatal error:  Uncaught exception 'StanfordNLP\Exception' with message 'Jar file path does not exist.' in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\Base.php:110
+Stack trace:
+#0 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\POSTagger.php(35): StanfordNLP\Base->setJar('/PHP-Stanford-N...')
+#1 C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php(176): StanfordNLP\POSTagger->__construct('C:\\xampp\\apps\\w...', '/PHP-Stanford-N...')
+#2 C:\xampp\apps\wordpress\htdocs\wp-includes\template-loader.php(89): include('C:\\xampp\\apps\\w...')
+#3 C:\xampp\apps\wordpress\htdocs\wp-blog-header.php(16): require_once('C:\\xampp\\apps\\w...')
+#4 C:\xampp\apps\wordpress\htdocs\index.php(17): require('C:\\xampp\\apps\\w...')
+#5 {main}
+  thrown in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\PHP-Stanford-NLP\src\StanfordNLP\Base.php on line 110
+[13-Jan-2016 16:28:26 UTC] PHP Warning:  include(C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggthemePHP-Stanford-NLP/autoload.php): failed to open stream: No such file or directory in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php on line 172
+[13-Jan-2016 16:28:26 UTC] PHP Warning:  include(): Failed opening 'C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggthemePHP-Stanford-NLP/autoload.php' for inclusion (include_path='.;C:\xampp\php\PEAR') in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php on line 172
+[13-Jan-2016 16:28:26 UTC] PHP Fatal error:  Class 'StanfordNLP\POSTagger' not found in C:\xampp\apps\wordpress\htdocs\wp-content\themes\ggtheme\wpquery.php on line 174
