@@ -27,7 +27,6 @@ $('.doneButton').click(function() {
     console.log('selectedWords:')
     console.log($selectedWords);
 
-
   // hide the content and the button
   $('.article-view').hide();
   
@@ -36,6 +35,20 @@ $('.doneButton').click(function() {
     $('.selected-words').append('<li>' + val + '</li>');
   })
   $('.results-view').show();
+
+  // calls the tagger to run
+  $.ajax({
+    type: "POST",
+    url: "run-the-tagger.php",
+    data: {
+      action: 'tag_the_content'
+    },
+    success: function(){
+      console.log('tagger has run');
+    }
+
+  })
+
 })
 
 
