@@ -1,6 +1,6 @@
 <?php
 
-function tag_the_content(){
+//function tag_the_content(){
 	$time_start = microtime(true);
 	// sets DIR path variable
 	$dir = dirname(__FILE__);

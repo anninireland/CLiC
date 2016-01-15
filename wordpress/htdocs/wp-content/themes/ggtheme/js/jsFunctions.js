@@ -19,7 +19,7 @@ $('span').click(function() {
 
 
 // *** Runs the tagger *** 
-// $('.ggmain').load('/tagger.php');
+//
 /*
 var url = "/tagger.php";
 var callback = function(response){
@@ -30,15 +30,15 @@ $.get(url, callback);
 */
 
 /*
-$.ajax( "C:/xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/tagger.php" )
+$.ajax( "/xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/tagger.php" )
 .done(function(){
   alert( "tagger done");
 })
 .fail(function () {
   alert( "fail");
 })
-
 */
+
 
 // *** HELP button *** 
 // When helpButton is clicked, show the matching help box below the buttons
@@ -93,7 +93,18 @@ $('.doneButton').click(function() {
   $('.doneButton').parent().hide();
   $('#results-view').show();
 
-  // run the tagger HERE if possible?
+  // run the tagger HERE?
+  /*
+  jQuery.get( "C:/xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/tagger.php",
+    { action: 'my_action' },
+    alert( "ajax start"))
+  .fail( function () {
+    alert( "fail")
+  })
+  .done( function () {
+    alert( "tagger DONE!!")
+  });
+  */
 
 })
 

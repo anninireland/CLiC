@@ -6,6 +6,7 @@ This is the template for the Grammar Guru game
 
  */
 
+
 get_header(); ?>
 
 	<div id="primary" class="content-area">
@@ -24,7 +25,6 @@ get_header(); ?>
 			<?php 
 				// sets link for 'quit' button
 				$link = get_permalink( $post = $origin_id ); 
-				print_r($link)
 			?>
 
 			<?php
@@ -62,6 +62,8 @@ get_header(); ?>
 								<input class="helpButton" type="button" value="Help!" /> 
 								<input class="doneButton" type="button" value="I'm Done" />
 							</div>  <!-- .challenge-view -->
+
+
 
 							
 							<?php 
@@ -174,7 +176,15 @@ get_header(); ?>
 								<ul class="selected-words"></ul>
 								<?php // if success, show Star, else show tryagain button ?>
 								<input class="tryagainButton" type="button" value="Try Again" />
+
+
+
+
 								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
+
+
+
+
 								<br>
 							</div>  <!-- .results-view -->
 
@@ -186,6 +196,37 @@ get_header(); ?>
 									<p class="news-content"><?php the_content(); ?></p>
 								</div>
 							</div>  <!-- .article-view -->
+
+<?php $dirname=  dirname( get_bloginfo('stylesheet_url') ) ;
+echo $dirname;
+var_dump($dirname);
+?> 
+
+							<script>
+							var templateDir = '<?php dirname( get_bloginfo("stylesheet_url") ) ?>';
+							</script>
+
+							<script>
+							/*
+								jQuery.ajax( "C:/xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/tagger.php" )
+								.done(function(){
+								  alert( "tagger done");
+								})
+								.fail(function () {
+								  alert( "fail");
+								})
+*/
+								jQuery.get( templateDir+"/ggtheme/functions.php", 
+								{ action: 'wp_ajax_my_action'	},
+								alert( "ajax start"))
+								.fail( function () {
+									alert( "fail")
+								})
+								.done( function () {
+									alert( "tagger DONE!!")
+								});
+
+							</script>
 
 
 							<!-- 

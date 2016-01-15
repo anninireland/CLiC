@@ -1,14 +1,14 @@
 /*
 Theme Name:     Grammar Guru Theme
 Description:    Child theme for the Twenty Fifteen theme 
-Author:         Zac Gordon / Lisa Cavern 
+Author:         Lisa Cavern 
 Template:       twentyfifteen
 Version:        1.0
 */
 
 @import url(../twentyfifteen/style.css);
 
-#highlighter
+#highlighter 
 {
 	position: absolute;
 	right: 40px;
