@@ -1,10 +1,12 @@
 jQuery(document).ready(function($) {
 
+
+// *** Split text into spans ***
 // set up variables 
 var text = $('div.news-content').text();
 var $words = text.split(" ");
 var $newText = "";
-// Separate each word into a span.
+// put each word into a span.
 $.each($words, function(i, val) {
   $newText = $newText + '<span>' + val + '</span> ';
 })
@@ -14,11 +16,68 @@ $('span').click(function() {
   $(this).toggleClass('highlighted');
 });
 
-// When doneButton is clicked, create POST array containing each highlighted word.
+
+
+// *** Runs the tagger *** 
+// $('.ggmain').load('/tagger.php');
+/*
+var url = "/tagger.php";
+var callback = function(response){
+  // do something after it is finished
+  console.log("tagger is done");
+}
+$.get(url, callback);
+*/
+
+/*
+$.ajax( "C:/xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/tagger.php" )
+.done(function(){
+  alert( "tagger done");
+})
+.fail(function () {
+  alert( "fail");
+})
+
+*/
+
+// *** HELP button *** 
+// When helpButton is clicked, show the matching help box below the buttons
+$('.helpButton').click(function() {
+  $('#challenge-view').hide();
+  $('#help-view').show();
+})
+
+// *** CloseHelp Button *** 
+// When closehelpButton is clicked, show the matching help box below the buttons
+$('.closehelpButton').click(function() {
+  $('#help-view').hide();
+  $('#challenge-view').show();
+})
+
+// *** TryAgain Button *** 
+// When tryagain Button is clicked, show challenge, hide results 
+//    ***  - possibly clear the highlights?? 
+$('.tryagainButton').click(function() {
+  $('#results-view').hide();
+  $('#challenge-view').show();
+})
+
+
+// *** QUIT Button *** 
+// When QUIT Button is clicked, redirect to the origin post
+$('.quitButton').click(function() {
+  // ??? How to redirect in js? 
+  // ? call php ? 
+
+})
+
+// *** Done Button ***
+// When doneButton is clicked, create array containing each highlighted word.
 $('.doneButton').click(function() {
   var $selectedWords = [];
   $('.highlighted').each(function() {
     var $word = $(this).text();
+    // remove punctuation 
     if ($word.substr(-1) === '.') {
       $word = $word.slice(0, -1)
     }
@@ -27,39 +86,17 @@ $('.doneButton').click(function() {
     console.log('selectedWords:')
     console.log($selectedWords);
 
-  // hide the content and the button
-  $('.article-view').hide();
-  
   // show selected words in a list 
   $.each($selectedWords, function(i, val) {
     $('.selected-words').append('<li>' + val + '</li>');
   })
-  $('.results-view').show();
+  $('.doneButton').parent().hide();
+  $('#results-view').show();
 
-  // calls the tagger to run
-  $.ajax({
-    type: "POST",
-    url: "run-the-tagger.php",
-    data: {
-      action: 'tag_the_content'
-    },
-    success: function(){
-      console.log('tagger has run');
-    }
-
-  })
+  // run the tagger HERE if possible?
 
 })
 
 
-// When helpButton is clicked, show the matching help box below the buttons
-$('.helpButton').click(function() {
-  $('.help-view').show();
-})
-
-// When closeButton is clicked, show the matching help box below the buttons
-$('.closeButton').click(function() {
-  $('.help-view').hide();
-})
 
 });

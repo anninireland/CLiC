@@ -72,6 +72,7 @@ function tag_the_content(){
 	*/
 }
 
+tag_the_content();
 
 ?>
 

@@ -9,3 +9,11 @@ function add_gg_js() {
 	wp_enqueue_script( 'gg_theme_js');
 }
 add_action('wp_enqueue_scripts', 'add_gg_js');
+
+
+add_action('wp_enqueue_scripts', 'enqueue_my_jquery');
+
+function enqueue_my_jquery() {
+    wp_enqueue_script('jquery');
+}
+
