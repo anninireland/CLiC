@@ -176,15 +176,7 @@ get_header(); ?>
 								<ul class="selected-words"></ul>
 								<?php // if success, show Star, else show tryagain button ?>
 								<input class="tryagainButton" type="button" value="Try Again" />
-
-
-
-
 								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
-
-
-
-
 								<br>
 							</div>  <!-- .results-view -->
 
@@ -215,7 +207,7 @@ var_dump($dirname);
 								.fail(function () {
 								  alert( "fail");
 								})
-*/
+
 								jQuery.get( templateDir+"/ggtheme/functions.php", 
 								{ action: 'wp_ajax_my_action'	},
 								alert( "ajax start"))
@@ -225,7 +217,7 @@ var_dump($dirname);
 								.done( function () {
 									alert( "tagger DONE!!")
 								});
-
+*/
 							</script>
 
 

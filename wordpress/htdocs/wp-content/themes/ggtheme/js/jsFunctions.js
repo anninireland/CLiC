@@ -68,30 +68,39 @@ $('.tryagainButton').click(function() {
 $('.quitButton').click(function() {
   // ??? How to redirect in js? 
   // ? call php ? 
+});
 
-})
 
 // *** Done Button ***
 // When doneButton is clicked, create array containing each highlighted word.
 $('.doneButton').click(function() {
-  var $selectedWords = [];
-  $('.highlighted').each(function() {
-    var $word = $(this).text();
-    // remove punctuation 
-    if ($word.substr(-1) === '.') {
-      $word = $word.slice(0, -1)
-    }
-    $selectedWords.push($word);
-  });
-    console.log('selectedWords:')
-    console.log($selectedWords);
+  if ( $('.highlighted').length == 3) {
+    var $selectedWords = [];
+    $('.highlighted').each(function() {
+      var $word = $(this).text();
+      var punct = [ '.', ',', ';', ':', '!', '?', '(', ')', '[', ']', '{', '}' ] ;
+      if( jQuery.inArray( $word.substr(-1), punct) !== -1){ // remove punctuation 
+        $word = $word.slice(0, -1);
+      }
+      $selectedWords.push($word); // add word to $selectedwrods array
+    });
 
-  // show selected words in a list 
-  $.each($selectedWords, function(i, val) {
-    $('.selected-words').append('<li>' + val + '</li>');
-  })
-  $('.doneButton').parent().hide();
-  $('#results-view').show();
+    // add selected words as list elements for display
+    $('.selected-words').empty(); // empties the list of selected words 
+    $.each($selectedWords, function(i, val) {
+      $('.selected-words').append('<li>' + val + '</li>');
+    })
+    $('.doneButton').parent().hide(); // hide the current view
+    $('#results-view').show(); // show resutls view 
+  }
+  else {
+    alert( "Be sure you selected exactly 3 words!");
+  }
+});
+
+
+
+
 
   // run the tagger HERE?
   /*
@@ -105,8 +114,6 @@ $('.doneButton').click(function() {
     alert( "tagger DONE!!")
   });
   */
-
-})
 
 
 
