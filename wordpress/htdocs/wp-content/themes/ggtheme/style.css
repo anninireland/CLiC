@@ -15,6 +15,17 @@ Version:        1.0
 	width: 150px;
 }
 
+.selected-words {
+	list-style-type: none;
+}
+
+ul.matched-words {
+	list-style-image: url('assets/r_check-mark-md.png');
+}
+
+ul.unmatched-words {
+	list-style-image: url('assets/x-mark-red-th.png');
+}
 
 .side-view {
 	border-style: solid;
@@ -70,11 +81,23 @@ Version:        1.0
 {
 	background-color: yellow;
 }
-#results-view 
+#results-view
 {
   display: none;
   text-align: center;
 }
+#success-view
+{
+  display: none;
+  text-align: center;
+}
+#almost-view
+{
+  display: none;
+  text-align: center;
+}
+
+
 
 #help-view
 {

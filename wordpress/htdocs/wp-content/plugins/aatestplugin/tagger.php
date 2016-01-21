@@ -1,9 +1,7 @@
 <?php
 
-$the_text = "The enormous broad tires of the chariots and the padded feet of the animals brought forth no sound from the moss-covered sea bottom; and so we moved in utter silence, like some huge phantasmagoria, except when the stillness was broken by the guttural growling of a goaded zitidar, or the squealing of fighting thoats.";
 
-function tag_the_content( the_text ){
-	$time_start = microtime(true);
+function aa_tag_the_content( $content ){
 	// sets DIR path variable
 	$dir = dirname(__FILE__);
 	// loads tagger
@@ -14,15 +12,14 @@ function tag_the_content( the_text ){
 	($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/stanford-postagger.jar')
 	);
 	// calls tagger to tag the_content 
-	// $result = $pos->tag(explode(' ', get_the_content() )); //  *** change back to this in production *** 
-	$result = $pos->tag(explode(' ', the_text ));
+	$result = $pos->batchTag(explode(' ', $content ));
 	// print_r($result); // prints readable array data 
 
+	// echo json_encode($result);
 	return $result;
+};
 
-}
-
-function build_pos_arrays( tagged_text ){
+function aa_build_pos_arrays( $result ){
 	$noun_tags = Array ( "NN", "NNS", "NNP", "NNPS");
 	$verb_tags = Array ( "VB", "VBD", "VBG", "VBN", "VBP", "VBZ");
 	$adjective_tags = Array ( "JJ", "JJR", "JJS");
@@ -34,8 +31,8 @@ function build_pos_arrays( tagged_text ){
 	     	$nouns_list[] = $word[0];
 	     }
 	}
-	echo "Nouns: ";
-	print_r($nouns_list);
+	// echo "Nouns: ";
+	// print_r($nouns_list);
 
 	$verbs_list = Array();
 	foreach($result as $word){
@@ -43,8 +40,8 @@ function build_pos_arrays( tagged_text ){
 	     	$verbs_list[] = $word[0];
 	     }
 	}
-	echo "Verbs: ";
-	print_r($verbs_list);
+	// echo "Verbs: ";
+	// print_r($verbs_list);
 
 	$adjectives_list = Array();
 	foreach($result as $word){
@@ -52,8 +49,8 @@ function build_pos_arrays( tagged_text ){
 	     	$adjectives_list[] = $word[0];
 	     }
 	}
-	echo "adjectives: ";
-	print_r($adjectives_list);
+	// echo "adjectives: ";
+	// print_r($adjectives_list);
 
 	$adverbs_list = Array();
 	foreach($result as $word){
@@ -61,28 +58,12 @@ function build_pos_arrays( tagged_text ){
 	     	$adverbs_list[] = $word[0];
 	     }
 	}
-	echo "adverbs: ";
-	print_r($adverbs_list);
+	// echo "adverbs: ";
+	// print_r($adverbs_list);
 
 	return array( $nouns_list, $verbs_list, $adjectives_list, $adverbs_list );
 }
 
-// content tagged - saved as variable
-// pos arrays ready - saved as variables 
-// (later) save tagged and arrays to db with post id 
-// answers array 
-// get pos array for game 
-// compare and make 2 arrays: match noMatch 
-
-
-
-function 
-
-
-
-$tagged_text = tag_the_content( $the_text);
-list ( $nouns_list, $verbs_list, $adjectives_list, $adverbs_list ) = build_pos_arrays( $tagged_text );
-var_dump( $nouns_list );
 
 ?>
 

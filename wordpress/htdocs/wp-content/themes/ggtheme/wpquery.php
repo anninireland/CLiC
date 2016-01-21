@@ -60,7 +60,7 @@ get_header(); ?>
 								<h3>Click on a word to select it;</h3>
 								<h3>To remove it, click again</h3>
 								<input class="helpButton" type="button" value="Help!" /> 
-								<input class="doneButton" type="button" value="I'm Done" />
+								<input class="doneButton" type="button" name="done" value="I'm Done" />
 							</div>  <!-- .challenge-view -->
 
 
@@ -165,7 +165,7 @@ get_header(); ?>
 								}
 								?>
 								<input class="closehelpButton" type="button" value="close" />
-								<input class="doneButton" type="button" value="I'm Done" />
+								<input class="doneButton" type="button" name="done" value="I'm Done" />
 							</div>  <!-- .help-view -->
 
 
@@ -180,6 +180,27 @@ get_header(); ?>
 								<br>
 							</div>  <!-- .results-view -->
 
+							<div id="almost-view" class="side-view">
+								<h1>Nice effort!</h1>
+								<h2><span id="numCorrect"></span> correct out of 3</h2>
+								<ul class="matched-words"></ul>
+								<ul class="unmatched-words"></ul>
+								<p>You need all 3 words correct to earn a star</p>
+								<p>Would you like to try again?</p>
+								<input class="tryagainButton" type="button" value="Try Again" />
+								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
+							</div>  <!-- .almost-view -->
+
+
+
+							<div id="success-view" class="side-view">
+								<h1>Well Done! </h1>
+								<h2>All of your words are <?php $game ?></h2>
+								<ul class="matched-words"></ul>
+								<p>You have earned a STAR! </p>
+								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
+							</div>  <!-- .success-view -->
+
 
 							<div id="article-view">
 								<h2><?php the_title(); ?></h2>	
@@ -189,13 +210,66 @@ get_header(); ?>
 								</div>
 							</div>  <!-- .article-view -->
 
-<?php $dirname=  dirname( get_bloginfo('stylesheet_url') ) ;
-echo $dirname;
-var_dump($dirname);
-?> 
+					<?php 
+						
+						$post_id = $origin_id; // defined above 
+
+						// get the content and prepare it for the tagger 
+						$content_post = get_post($post_id);
+						$content = $content_post->post_content;
+
+						print_r($content);
+
+						$content = apply_filters('the_content', $content);
+						$content = str_replace(']]>', ']]&gt;', $content);
+
+						print_r($content);
+
+						// run tagger
+						include 'tagger.php';
+						$tagged_text = aa_tag_the_content( $content );
+						$posArrays = aa_build_pos_arrays( $tagged_text );
+
+						print_r($tagged_text);
+						print_r($posArrays);
+
+
+						global $wpdb;
+						$table_name = $wpdb->prefix . 'aatest';
+
+						// save results to db 
+						$wpdb->replace( 
+							$table_name, 
+							array( 
+							// data goes here 
+								'post_ID' => $post_id, 
+								'time' => current_time( 'mysql' ),
+								'post_title' => get_the_title( $post_id ), 
+								'post_content' => $content,
+								'tagged_content' => json_encode($tagged_text),
+								'nouns' => json_encode($posArrays[0]),
+								'verbs' => json_encode($posArrays[1]),
+								'adjectives' => json_encode($posArrays[2]),
+								'adverbs' => json_encode($posArrays[3]),
+								)
+							);
+
+					?>
+
+
+
+
+
+
+
+							<?php 
+								$dirname=  dirname( get_bloginfo('stylesheet_url') ) ;
+								// echo $dirname;
+								// var_dump($dirname);
+							?> 
 
 							<script>
-							var templateDir = '<?php dirname( get_bloginfo("stylesheet_url") ) ?>';
+								var templateDir = '<?php dirname( get_bloginfo("stylesheet_url") ) ?>';
 							</script>
 
 							<script>
@@ -217,7 +291,7 @@ var_dump($dirname);
 								.done( function () {
 									alert( "tagger DONE!!")
 								});
-*/
+							*/
 							</script>
 
 
@@ -238,40 +312,40 @@ var_dump($dirname);
 
 				<?php endif; ?>
 
+
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 
 <?php get_footer(); ?>
 
 
-
-
-
-
 <?php 	
 
 
 
-/*
-if(isset($_POST['submit'])){
-	$name_entered = $_POST['name'];
-	gg_save_record(); 	
-}
+	/*
+	if(isset($_POST['submit'])){
+		$name_entered = $_POST['name'];
+		gg_save_record(); 	
+	}
 
-require_once(ABSPATH . 'wp-settings.php');
+	require_once(ABSPATH . 'wp-settings.php');
 
-	// function for saving to db -- somehow is ruuning on pageload and when form submitted. 
-function gg_save_record(){
-	
-	global $wpdb;
-	global $origin_id;
-	global $game;
-	global $name_entered;
-	$wpdb->insert($wpdb->prefix . 'gg_practice_results', 
-		array("gg_post" => $origin_id, "type" => $game, "name" => "test"),
-		array("%d", "%s", "%s"));
-	///echo "Saved!";
-}
-*/
+		// function for saving to db -- somehow is ruuning on pageload and when form submitted. 
+	function gg_save_record(){
+		
+		global $wpdb;
+		global $origin_id;
+		global $game;
+		global $name_entered;
+		$wpdb->insert($wpdb->prefix . 'gg_practice_results', 
+			array("gg_post" => $origin_id, "type" => $game, "name" => "test"),
+			array("%d", "%s", "%s"));
+		///echo "Saved!";
+	}
+	*/
 ?>
+
+
+
 

@@ -1,59 +1,96 @@
 <?php
 /*
-Plugin Name: GG test area
+Plugin Name: _GG test area
 Plugin URI: 
-Description: Super simple GG starting point 
+Description: GG Testing zone. 
 Version: 1.
 Author: Lisa
 Author URI: 
 */
 
-function gg_loadMyScripts()
-{
-    wp_register_script( 'ggscript', plugins_url( '/ajax.js', __FILE__ ));
-    wp_enqueue_script( 'ggscript' );
-    wp_localize_script( 'ggscript', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-}
-
-add_action( 'wp_enqueue_scripts','gg_loadMyScripts' );
-
- // THE AJAX ADD ACTIONS
- add_action( 'wp_ajax_the_ajax_hook', 'gg_action_function' );
- add_action( 'wp_ajax_nopriv_the_ajax_hook', 'gg_action_function' ); // need this to serve non logged in users
  
 
-// THE FUNCTION
-function gg_action_function(){
-	// echos back the entered word 
-	$noun = $_POST['noun'];
-	echo"You entered " . $noun . ". Thank You! ";// this is passed back to the javascript function
-	die();
+/*
+add db table on activation
+*/
+global $gg_db_version;
+$gg_db_version = '1.0';
+
+function gg_install() {
+	global $wpdb;
+	global $gg_db_version;
+
+	$table_name = $wpdb->prefix . 'gg_pos_tags';
+	
+	$charset_collate = $wpdb->get_charset_collate();
+
+	$sql = "CREATE TABLE $table_name (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+		post_ID mediumint(9) NOT NULL UNIQUE KEY,
+		post_title varchar(100) NOT NULL,
+		post_content text NOT NULL,
+		tagged_content text NOT NULL,
+		nouns text NOT NULL,
+		verbs text NOT NULL,
+		adjectives text NOT NULL,
+		adverbs text NOT NULL,
+
+	) $charset_collate;";
+
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+
+	add_option( 'gg_db_version', $gg_db_version );
 }
+register_activation_hook( __FILE__, 'gg_install' );
 
- // ADD gg menu TO THE POST 
- function gg_menu($content){
- 	if( is_single() ) {
- 		$gg_start = '
-		<form id="gg_start">
-		<p>Enter a noun </p>
-		<input id="noun" name="noun" value = "" type="text" />
-		<input name="action" type="hidden" value="the_ajax_hook" /> <!-- this puts the action the_ajax_hook into the serialized form -->
-		<input id="submit_button" value = "Click Me" type="button" onClick=" gg_noun();" />
-		</form>
 
-		<div id="noun_area">
-		This is where your noun will be shown
-		</div>
-		<br>
-
-		<a href="http://localhost/wordpress/grammar-guru/">Click Here for GG</a>
-
-		';
-
-		$content .= $gg_start;
-	}
-	return $content;
+function gg_install_data() {
+	global $wpdb;
+	
+	$table_name = $wpdb->prefix . 'gg_pos_tags';
+	
+	$wpdb->insert( 
+		$table_name, 
+		array( 
+			'post_ID' => 1, 
+			'post_title' => "Sample" , 
+			'post_content' => "The enormous broad tires of the chariots and the padded feet of the animals brought forth no sound from the moss-covered sea bottom; and so we moved in utter silence, like some huge phantasmagoria, except when the stillness was broken by the guttural growling of a goaded zitidar, or the squealing of fighting thoats.",
+			'tagged_content' => "",
+			'nouns' => "noun",
+			'verbs' => '["tires", "chariots", "feet", "animals", "sound", "sea", "bottom", "silence", "phantasmagoria", "stillness", "growling", "zitidar", "squealing", "thoats"]',
+			'adjectives' => "",
+			'adverbs' => "",
+		) 
+	);
 }
+register_activation_hook( __FILE__, 'gg_install_data' );
 
-add_filter('the_content', "gg_menu");
+/*
+function to run whenever a post is saved 
+*/
+function gg_get_pos_data( $post_id ) {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'gg_pos_tags';
+
+	// run tagger
+
+	// save results to db 
+	$wpdb->replace( 
+		$table_name, 
+		array( 
+		// data goes here 
+			'post_ID' => $post_id, 
+			'post_title' => get_the_title( $post_id ), 
+			'post_content' => get_the_content( $post_id ),
+			'tagged_content' => "nested array ",
+			'nouns' => "noun",
+			'verbs' => '["tires", "chariots", "feet", "animals", "sound", "sea", "bottom", "silence", "phantasmagoria", "stillness", "growling", "zitidar", "squealing", "thoats"]',
+			'adjectives' => "adjectives",
+			'adverbs' => "adverbs",
+			)
+		);
+}
+add_action( 'save_post', 'gg_get_pos_data' );
+
 ?>

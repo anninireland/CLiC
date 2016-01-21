@@ -65,56 +65,102 @@ $('.tryagainButton').click(function() {
 
 // *** QUIT Button *** 
 // When QUIT Button is clicked, redirect to the origin post
-$('.quitButton').click(function() {
-  // ??? How to redirect in js? 
-  // ? call php ? 
-});
+// This is done in the HTML via a link, no js needed. 
 
 
 // *** Done Button ***
 // When doneButton is clicked, create array containing each highlighted word.
 $('.doneButton').click(function() {
-  if ( $('.highlighted').length == 3) {
-    var $selectedWords = [];
-    $('.highlighted').each(function() {
-      var $word = $(this).text();
-      var punct = [ '.', ',', ';', ':', '!', '?', '(', ')', '[', ']', '{', '}' ] ;
-      if( jQuery.inArray( $word.substr(-1), punct) !== -1){ // remove punctuation 
-        $word = $word.slice(0, -1);
-      }
-      $selectedWords.push($word); // add word to $selectedwrods array
-    });
-
-    // add selected words as list elements for display
-    $('.selected-words').empty(); // empties the list of selected words 
-    $.each($selectedWords, function(i, val) {
-      $('.selected-words').append('<li>' + val + '</li>');
-    })
-    $('.doneButton').parent().hide(); // hide the current view
-    $('#results-view').show(); // show resutls view 
-  }
-  else {
+  // check if there are 3 answers 
+  if ( $('.highlighted').length != 3) {
+    // alert to get 3 exactly 
     alert( "Be sure you selected exactly 3 words!");
   }
-});
+  else {
+
+    // *** Runs the tagger *** 
+
+    var url = "c:xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/js/tagger.php";
+    //var url = "/tagger.php";
+    var callback = function(response){
+      console.log("calling the tagger");
+      // when tagger is  finished
+      var posArrays = response;
+      console.log("tagger is done");
+      // console.log( posArrays );
+
+      // process answers into array
+      var selectedWords = [];
+
+
+      $('.highlighted').each(function() {
+        var $word = $(this).text();
+        var punct = [ '.', ',', ';', ':', '!', '?', '(', ')', '[', ']', '{', '}' ] ;
+        if( jQuery.inArray( $word.substr(-1), punct) !== -1){ // remove punctuation 
+          $word = $word.slice(0, -1);
+        }
+        selectedWords.push($word); // add word to selectedwords array
+      });
+
+      // compare answers to pos array 
+      // select pos array based on game 
+      // for now, just nouns 
+
+      var allPOSarrays =  JSON.parse(posArrays);
+      var nounsArray = $(allPOSarrays).get(0);
+      console.log( nounsArray);
+
+      var matchedWords = [];
+      var unmatchedWords = [];
+
+      $.each( selectedWords, function(i, word) { // iterate over selectedwords
+        if($.inArray( word, nounsArray) > -1){ // check if match found in answer array
+          // match found 
+          matchedWords.push(word);
+        }
+        else {
+          // not matched 
+          unmatchedWords.push(word);
+        }
+      });
+
+      $.each(matchedWords, function(i, val) {
+        $('.matched-words').append('<li>' + val + '</li>');
+      })
+
+      $.each(unmatchedWords, function(i, val) {
+        $('.unmatched-words').append('<li>' + val + '</li>');
+      })
+
+      console.log(matchedWords);
+      console.log(unmatchedWords);
+
+      var countMatched = $(matchedWords).length;
+      $('#numCorrect').empty;
+      $('#numCorrect').append(countMatched);
+
+      if($(matchedWords).length == 3){
+        // all correct - Yay! 
+        $('.doneButton').parent().hide(); // hide the current view
+        $('#success-view').show(); // show resutls view 
+      }
+      else {
+        // display almost view 
+        $('.doneButton').parent().hide(); // hide the current view
+        $('#almost-view').show(); // show resutls view 
+      }
+
+      }; // end tagger function
+
+    } // end else for done 
+
+    $.get(url, callback);
+
+
+
+}); // end done function
 
 
 
 
-
-  // run the tagger HERE?
-  /*
-  jQuery.get( "C:/xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/tagger.php",
-    { action: 'my_action' },
-    alert( "ajax start"))
-  .fail( function () {
-    alert( "fail")
-  })
-  .done( function () {
-    alert( "tagger DONE!!")
-  });
-  */
-
-
-
-});
+}); // end jQuery ready function

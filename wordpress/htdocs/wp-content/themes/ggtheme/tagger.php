@@ -1,7 +1,7 @@
 <?php
 
-//function tag_the_content(){
-	$time_start = microtime(true);
+
+function aa_tag_the_content( $content ){
 	// sets DIR path variable
 	$dir = dirname(__FILE__);
 	// loads tagger
@@ -12,25 +12,27 @@
 	($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/stanford-postagger.jar')
 	);
 	// calls tagger to tag the_content 
-	$result = $pos->tag(explode(' ', get_the_content() ));
+	$result = $pos->tag(explode(' ', $content ));
 	// print_r($result); // prints readable array data 
 
-	$time_now = microtime(true);
+	// echo json_encode($result);
+	return $result;
+};
 
+function aa_build_pos_arrays( $result ){
 	$noun_tags = Array ( "NN", "NNS", "NNP", "NNPS");
 	$verb_tags = Array ( "VB", "VBD", "VBG", "VBN", "VBP", "VBZ");
 	$adjective_tags = Array ( "JJ", "JJR", "JJS");
 	$adverb_tags = Array ( "RB", "RBR", "RBS");
 
-	
 	$nouns_list = Array();
 	foreach($result as $word){
 	     if ( in_array( $word[1], $noun_tags )){
 	     	$nouns_list[] = $word[0];
 	     }
 	}
-	echo "Nouns: ";
-	print_r($nouns_list);
+	// echo "Nouns: ";
+	// print_r($nouns_list);
 
 	$verbs_list = Array();
 	foreach($result as $word){
@@ -38,8 +40,8 @@
 	     	$verbs_list[] = $word[0];
 	     }
 	}
-	echo "Verbs: ";
-	print_r($verbs_list);
+	// echo "Verbs: ";
+	// print_r($verbs_list);
 
 	$adjectives_list = Array();
 	foreach($result as $word){
@@ -47,8 +49,8 @@
 	     	$adjectives_list[] = $word[0];
 	     }
 	}
-	echo "adjectives: ";
-	print_r($adjectives_list);
+	// echo "adjectives: ";
+	// print_r($adjectives_list);
 
 	$adverbs_list = Array();
 	foreach($result as $word){
@@ -56,23 +58,12 @@
 	     	$adverbs_list[] = $word[0];
 	     }
 	}
-	echo "adverbs: ";
-	print_r($adverbs_list);
+	// echo "adverbs: ";
+	// print_r($adverbs_list);
 
-
-
-	/*
-	$time_end = microtime(true);
-	$time_to_tag = $time_now - $time_start;
-	$time_to_arrays = $time_end - $time_now;
-	$time_elapsed = $time_end - $time_start;
-	echo "Tagged in: $time_to_tag seconds\n ";
-	echo "Arrays in: $time_to_arrays seconds\n ";
-	echo "All done in: $time_elapsed seconds\n ";
-	*/
+	return array( $nouns_list, $verbs_list, $adjectives_list, $adverbs_list );
 }
 
-tag_the_content();
 
 ?>
 
