@@ -3,41 +3,18 @@ jQuery(document).ready(function($) {
 
 // *** Split text into spans ***
 // set up variables 
-var text = $('div.news-content').text();
+var text = $('p.news-content').text();
 var $words = text.split(" ");
 var $newText = "";
 // put each word into a span.
-$.each($words, function(i, val) {
-  $newText = $newText + '<span>' + val + '</span> ';
-})
-$('.news-content').html($newText);
+// $.each($words, function(i, val) {
+//  $newText = $newText + '<span>' + val + '</span> ';
+//})
+// $('p.news-content').html($newText);
 // Toggle highlight when a word is clicked.
-$('span').click(function() {
-  $(this).toggleClass('highlighted');
+$("span").click(function() {
+  $(this).toggleClass("highlighted");
 });
-
-
-
-// *** Runs the tagger *** 
-//
-/*
-var url = "/tagger.php";
-var callback = function(response){
-  // do something after it is finished
-  console.log("tagger is done");
-}
-$.get(url, callback);
-*/
-
-/*
-$.ajax( "/xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/tagger.php" )
-.done(function(){
-  alert( "tagger done");
-})
-.fail(function () {
-  alert( "fail");
-})
-*/
 
 
 // *** HELP button *** 
@@ -58,7 +35,8 @@ $('.closehelpButton').click(function() {
 // When tryagain Button is clicked, show challenge, hide results 
 //    ***  - possibly clear the highlights?? 
 $('.tryagainButton').click(function() {
-  $('#results-view').hide();
+  $('.tryagainButton').parent().hide(); // hide the current view
+  //$('#results-view').hide();
   $('#challenge-view').show();
 })
 
@@ -71,71 +49,60 @@ $('.tryagainButton').click(function() {
 // *** Done Button ***
 // When doneButton is clicked, create array containing each highlighted word.
 $('.doneButton').click(function() {
+  var matchedWords = [];
+  var unmatchedWords = [];
   // check if there are 3 answers 
   if ( $('.highlighted').length != 3) {
-    // alert to get 3 exactly 
     alert( "Be sure you selected exactly 3 words!");
   }
   else {
 
-    // *** Runs the tagger *** 
 
-    //var url = "c:xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/js/tagger.php";
-    //var url = "/tagger.php";
-    // var callback = function(response){
-      // console.log("calling the tagger");
-      // when tagger is  finished
-      // var posArrays = response;
-      // console.log("tagger is done");
-      // console.log( posArrays );
-
-
-      // check answers 
-      var matchedWords = [];
-      var unmatchedWords = [];
-
-      $('.highlighted').each(function() {
-        if( $(this).hasClass( "NN") ){ 
-          // match found 
-          matchedWords.push(this);
-        }
-        else {
-          // not matched 
-          unmatchedWords.push(this);
-        }
-      });
-
-      $.each(matchedWords, function(i, val) {
-        $('.matched-words').append('<li>' + val + '</li>');
-      })
-
-      $.each(unmatchedWords, function(i, val) {
-        $('.unmatched-words').append('<li>' + val + '</li>');
-      })
-
-      console.log(matchedWords);
-      console.log(unmatchedWords);
-
-      var countMatched = $(matchedWords).length;
-      $('#numCorrect').empty;
-      $('#numCorrect').append(countMatched);
-
-      if($(matchedWords).length == 3){
-        // all correct - Yay! 
-        $('.doneButton').parent().hide(); // hide the current view
-        $('#success-view').show(); // show resutls view 
+    // check answers and add to appropriate list 
+    $('.highlighted').each(function() {
+      console.log(this);
+      if( $(this).hasClass("NN") ){ 
+        // match found 
+        matchedWords.push( $(this).text() );
       }
       else {
-        // display almost view 
-        $('.doneButton').parent().hide(); // hide the current view
-        $('#almost-view').show(); // show resutls view 
+        // not matched 
+        unmatchedWords.push( $(this).text() );
       }
+    });
 
-      }; // end else
+    // empty the word lists ** IMPORTANT ** 
+    $('.matched-words').empty(); 
+    $('.unmatched-words').empty();
+    $('#numCorrect').empty();
+
+    $.each(matchedWords, function(i, val) {
+      $('.matched-words').append('<li>'+ val +'</li>');
+    })
+
+    $.each(unmatchedWords, function(i, val) {
+      $('.unmatched-words').append('<li>' + val + '</li>');
+    })
+
+    console.log(matchedWords);
+    console.log(unmatchedWords);
+
+    var countMatched = $(matchedWords).length;
+    $('#numCorrect').append(countMatched);
+
+    if($(matchedWords).length == 3){
+      // all correct - Yay! 
+      $('.doneButton').parent().hide(); // hide the current view
+      $('#success-view').show(); // show resutls view 
+    }
+    else {
+      // display almost view 
+      $('.doneButton').parent().hide(); // hide the current view
+      $('#almost-view').show(); // show resutls view 
+    }
+
+  }; // end else
 
 }); // end done function
-
-
-
 
 }); // end jQuery ready function

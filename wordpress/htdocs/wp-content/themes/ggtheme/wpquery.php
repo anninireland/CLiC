@@ -51,8 +51,10 @@ get_header(); ?>
 							<h1>Grammar Guru</h1>
 
 							<div id="challenge-view" class="side-view">
+
 								<!-- What's up with this path ??  FIX LATER 
 								<img src= "<?php echo get_stylesheet_directory(); ?>\assets\yellowhighlighter.png"> -->
+
 								<img id="highlighter" src="http://www.iainball.com/psd-yellow-highlighter-pen-icon.png"/>
 								
 								<h2>Your challenge:</h2>
@@ -62,71 +64,6 @@ get_header(); ?>
 								<input class="helpButton" type="button" value="Help!" /> 
 								<input class="doneButton" type="button" name="done" value="I'm Done" />
 							</div>  <!-- .challenge-view -->
-
-
-
-							
-							<?php 
-							/*
-								$time_start = microtime(true);
-								// sets DIR path variable
-								$dir = dirname(__FILE__);
-								// loads tagger
-								include($dir.'/PHP-Stanford-NLP/autoload.php');
-								// creates tagger
-								$pos = new \StanfordNLP\POSTagger(
-								  ($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/models/english-left3words-distsim.tagger'),
-								($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/stanford-postagger.jar')
-								);
-								// calls tagger to tag the_content 
-								$result = $pos->tag(explode(' ', get_the_content() ));
-								// print_r($result); // prints readable array data 
-
-								$time_now = microtime(true);
-
-								$noun_tags = Array ( "NN", "NNS", "NNP", "NNPS");
-								$verb_tags = Array ( "VB", "VBD", "VBG", "VBN", "VBP", "VBZ");
-								$adjective_tags = Array ( "JJ", "JJR", "JJS");
-								$adverb_tags = Array ( "RB", "RBR", "RBS");
-
-								$nouns_list = Array();
-								foreach($result as $word){
-								     if ( in_array( $word[1], $noun_tags )){
-								     	$nouns_list[] = $word[0];
-								     }
-								}
-
-								$verbs_list = Array();
-								foreach($result as $word){
-								     if ( in_array( $word[1], $verb_tags )){
-								     	$verbs_list[] = $word[0];
-								     }
-								}
-
-								$adjectives_list = Array();
-								foreach($result as $word){
-								     if ( in_array( $word[1], $adjective_tags )){
-								     	$adjectives_list[] = $word[0];
-								     }
-								}
-
-								$adverbs_list = Array();
-								foreach($result as $word){
-								     if ( in_array( $word[1], $adverb_tags )){
-								     	$adverbs_list[] = $word[0];
-								     }
-								}
-								/*
-								echo "Nouns: ";
-								print_r($nouns_list);
-								echo "Verbs: ";
-								print_r($verbs_list);
-								echo "adjectives: ";
-								print_r($adjectives_list);
-								echo "adverbs: ";
-								print_r($adverbs_list);
-								*/
-							?>
 
 							<div id="help-view" class="side-view">
 								<?php 
@@ -170,14 +107,16 @@ get_header(); ?>
 
 
 							<div id="results-view" class="side-view">
+								<!--
 								<?php // if success, show "Well Done!", else show "Almost!" ?>
 								<h1>Results! </h1>
 								<h2>You selected these words: </h2>
 								<ul class="selected-words"></ul>
 								<?php // if success, show Star, else show tryagain button ?>
 								<input class="tryagainButton" type="button" value="Try Again" />
-								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
+								<a href="<?php //echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
 								<br>
+								-->
 							</div>  <!-- .results-view -->
 
 							<div id="almost-view" class="side-view">
@@ -202,27 +141,22 @@ get_header(); ?>
 							</div>  <!-- .success-view -->
 
 
-							<div id="article-view">
+							<div id="article-view" class="">
 								<h2><?php the_title(); ?></h2>	
 								<br>
+								
 								<?php 
-
+									// get tagged content from wpdb 
 									global $wpdb;
 									$table_name = $wpdb->prefix . 'aatest';
-
 									$sql = "SELECT tagged_content FROM (
 										SELECT *
 										FROM $table_name
 									    WHERE post_ID= $origin_id
 									    ORDER BY time DESC
 									    LIMIT 1) as tpost";
-
-									$tagged_post = $wpdb->get_var( $sql );
-									// echo $tagged_post;
-									// var_dump($tagged_post);
-									// print_r($tagged_post);
-
-									$decoded = json_decode($tagged_post);
+									$tagged_post = $wpdb->get_var( $sql ); // database query 
+									$decoded = json_decode($tagged_post); // decode the json encoded array
 
 									$taggedSpans = "";
 
@@ -230,6 +164,11 @@ get_header(); ?>
 									foreach ($decoded as $element) {
 										$text = $element[0];
 										$tag = $element[1];
+										
+										// remove any <p> tags with p> 
+										if ( strpos($text, "p>")) {
+											continue;
+										}
 
 									    // if text is punctuation, do not add class
 									    $punct = array(".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", "`", "\"");
@@ -239,61 +178,13 @@ get_header(); ?>
 										else{ // add class and a space 
 											$span = ('<span class="' . $tag . '"> ' . $text . '</span>');
 										}
-										// echo $span;
 										$taggedSpans .= $span; 
-
 									}
-
 									echo $taggedSpans;
 								?>
-
+<p class="news-content"><?php echo $taggedSpans ?></p>
 								</div>
 							</div>  <!-- .article-view -->
-
-					<?php 
-						/*
-						$post_id = $origin_id; // defined above 
-
-						// get the content and prepare it for the tagger 
-						$content_post = get_post($post_id);
-						$content = $content_post->post_content;
-
-						//print_r($content);
-
-						$content = apply_filters('the_content', $content);
-						$content = str_replace(']]>', ']]&gt;', $content);
-
-						//print_r($content);
-
-						// run tagger
-						include 'tagger.php';
-						$tagged_text = aa_tag_the_content( $content );
-
-						print_r($tagged_text);
-						print_r($posArrays);
-
-
-						global $wpdb;
-						$table_name = $wpdb->prefix . 'aatest';
-
-						// save results to db 
-						$wpdb->replace( 
-							$table_name, 
-							array( 
-							// data goes here 
-								'post_ID' => $post_id, 
-								'time' => current_time( 'mysql' ),
-								'post_title' => get_the_title( $post_id ), 
-								'post_content' => $content,
-								'tagged_content' => json_encode($tagged_text),
-								'nouns' => json_encode($posArrays[0]),
-								'verbs' => json_encode($posArrays[1]),
-								'adjectives' => json_encode($posArrays[2]),
-								'adverbs' => json_encode($posArrays[3]),
-								)
-							);
-					*/
-					?>
 
 							<?php 
 								$dirname=  dirname( get_bloginfo('stylesheet_url') ) ;
@@ -305,38 +196,14 @@ get_header(); ?>
 								var templateDir = '<?php dirname( get_bloginfo("stylesheet_url") ) ?>';
 							</script>
 
-							<script>
-							/*
-								jQuery.ajax( "C:/xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/tagger.php" )
-								.done(function(){
-								  alert( "tagger done");
-								})
-								.fail(function () {
-								  alert( "fail");
-								})
-
-								jQuery.get( templateDir+"/ggtheme/functions.php", 
-								{ action: 'wp_ajax_my_action'	},
-								alert( "ajax start"))
-								.fail( function () {
-									alert( "fail")
-								})
-								.done( function () {
-									alert( "tagger DONE!!")
-								});
-							*/
-							</script>
-
 
 							<!-- 
-							<p>You came here from post # <?php echo $origin_id; ?>	</p>
-							<p>You chose <?php echo $game; ?>	</p>
-
 							<form method="post" action=<?php gg_save_record() ?> >
 							Enter your name: <input type="text" name="name"/> 
 							<input type="submit" value="Click Me"/> 
 							</form>
 							-->
+
 						</div> <!-- .ggmain -->
 
 					<?php endwhile; else: ?>
@@ -353,9 +220,6 @@ get_header(); ?>
 
 
 <?php 	
-
-
-
 	/*
 	if(isset($_POST['submit'])){
 		$name_entered = $_POST['name'];
@@ -378,7 +242,3 @@ get_header(); ?>
 	}
 	*/
 ?>
-
-
-
-
