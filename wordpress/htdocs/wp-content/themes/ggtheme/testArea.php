@@ -42,7 +42,23 @@ get_header(); ?>
 
 			<div class="test">			
 
+			<?php 
 
+				foreach ([["This","DT"],["is","VBZ"],["your","PRP$"],["first","JJ"],["post","NN"],[".","."]] as $element) {
+				    $text = $element[0];
+				    $tag = $element[1];
+				    // if text is punctuation, do not add class
+				    $punct = array(".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", "`", "\"");
+				    if (in_array ( $text , $punct)){
+				        $span = ("<span>" . $text . "</span>");
+				    }
+				    else{ // add class and a space 
+				        $span = ("<span class='" . $tag . "'> " . $text . "</span>");
+				    }
+				    echo $span;
+				}
+				?>
+										
 				<h1>Grammar Guru</h1>
 				<h2>Your challenge: Find <span class="findThis">three words</span> in this article.</h2>
 				<div class="article-view">

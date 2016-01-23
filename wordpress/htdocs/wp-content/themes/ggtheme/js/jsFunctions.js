@@ -80,47 +80,28 @@ $('.doneButton').click(function() {
 
     // *** Runs the tagger *** 
 
-    var url = "c:xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/js/tagger.php";
+    //var url = "c:xampp/apps/wordpress/htdocs/wp-content/themes/ggtheme/js/tagger.php";
     //var url = "/tagger.php";
-    var callback = function(response){
-      console.log("calling the tagger");
+    // var callback = function(response){
+      // console.log("calling the tagger");
       // when tagger is  finished
-      var posArrays = response;
-      console.log("tagger is done");
+      // var posArrays = response;
+      // console.log("tagger is done");
       // console.log( posArrays );
 
-      // process answers into array
-      var selectedWords = [];
 
-
-      $('.highlighted').each(function() {
-        var $word = $(this).text();
-        var punct = [ '.', ',', ';', ':', '!', '?', '(', ')', '[', ']', '{', '}' ] ;
-        if( jQuery.inArray( $word.substr(-1), punct) !== -1){ // remove punctuation 
-          $word = $word.slice(0, -1);
-        }
-        selectedWords.push($word); // add word to selectedwords array
-      });
-
-      // compare answers to pos array 
-      // select pos array based on game 
-      // for now, just nouns 
-
-      var allPOSarrays =  JSON.parse(posArrays);
-      var nounsArray = $(allPOSarrays).get(0);
-      console.log( nounsArray);
-
+      // check answers 
       var matchedWords = [];
       var unmatchedWords = [];
 
-      $.each( selectedWords, function(i, word) { // iterate over selectedwords
-        if($.inArray( word, nounsArray) > -1){ // check if match found in answer array
+      $('.highlighted').each(function() {
+        if( $(this).hasClass( "NN") ){ 
           // match found 
-          matchedWords.push(word);
+          matchedWords.push(this);
         }
         else {
           // not matched 
-          unmatchedWords.push(word);
+          unmatchedWords.push(this);
         }
       });
 
@@ -150,13 +131,7 @@ $('.doneButton').click(function() {
         $('#almost-view').show(); // show resutls view 
       }
 
-      }; // end tagger function
-
-    } // end else for done 
-
-    $.get(url, callback);
-
-
+      }; // end else
 
 }); // end done function
 

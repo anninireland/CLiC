@@ -26,10 +26,6 @@ function aa_install() {
 		post_title VARCHAR(100) NOT NULL,
 		post_content LONGTEXT NOT NULL,
 		tagged_content LONGTEXT NOT NULL,
-		nouns LONGTEXT NOT NULL,
-		verbs LONGTEXT NOT NULL,
-		adjectives LONGTEXT NOT NULL,
-		adverbs LONGTEXT NOT NULL,
 
 		UNIQUE KEY id (id)
 	) $charset_collate;";
@@ -60,13 +56,33 @@ function aa_get_pos_data( $post_id ) {
 	$content = apply_filters('the_content', $content);
 	$content = str_replace(']]>', ']]&gt;', $content);
 
-	// run tagger
-	include 'tagger.php';
-	$tagged_text = aa_tag_the_content( $content );
-	$posArrays = aa_build_pos_arrays( $tagged_text );
 
-	//var_dump($tagged_text);
-	//var_dump($posArrays);
+	// process_the_content( $content );
+
+		// function process_the_content( $content ){
+		$sentenceArray = preg_split('/(?<=[.?!])\s+(?=[a-z])/i', $content);
+
+		$taggedSpans = "";
+		$resultTagged = array();
+
+			// for each sentence,
+			foreach ($sentenceArray as $sentence){
+				$exploded = explode(' ', $sentence);
+				$this_result = bb_tag_the_content( $sentence ); // run the tagger
+
+				set_time_limit(40);
+
+				$resultTagged = array_merge( $resultTagged, $this_result);
+
+
+			}
+			$jsonTagged = json_encode($resultTagged);
+			$serialTagged = serialize($resultTagged);
+
+
+		//	}
+
+
 
 	// save results to db 
 	$wpdb->replace( 
@@ -76,14 +92,31 @@ function aa_get_pos_data( $post_id ) {
 			'post_ID' => $post_id, 
 			'time' => current_time( 'mysql' ),
 			'post_title' => get_the_title( $post_id ), 
-			'post_content' => $content,
-			'tagged_content' => json_encode($tagged_text),
-			'nouns' => json_encode($posArrays[0]),
-			'verbs' => json_encode($posArrays[1]),
-			'adjectives' => json_encode($posArrays[2]),
-			'adverbs' => json_encode($posArrays[3]),
+			'post_content' => "$content",
+			'tagged_content' => $jsonTagged,
 			)
 		);
 }
 add_action( 'save_post', 'aa_get_pos_data' );
 
+function bb_tag_the_content( $sentence ){
+
+	$time_start = microtime(true);
+	// sets DIR path variable
+	$dir = dirname(__FILE__);
+	// loads tagger
+	include($dir.'/PHP-Stanford-NLP/autoload.php');
+	// creates tagger
+	$pos = new \StanfordNLP\POSTagger(
+	  ($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/models/english-left3words-distsim.tagger'),
+	($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/stanford-postagger.jar')
+	);
+	// calls tagger to tag the_content 
+	// $result = $pos->tag(explode(' ', get_the_content() )); //  *** change back to this in production *** 
+
+	$result = $pos->tag(explode(' ', $sentence ));
+
+	// echo json_encode($result);
+	return $result;
+
+}

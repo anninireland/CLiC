@@ -15,6 +15,9 @@ Version:        1.0
 	width: 150px;
 }
 
+.NNP{
+	color: green;
+}
 .selected-words {
 	list-style-type: none;
 }

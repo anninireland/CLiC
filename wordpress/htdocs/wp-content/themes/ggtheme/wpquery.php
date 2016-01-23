@@ -205,30 +205,69 @@ get_header(); ?>
 							<div id="article-view">
 								<h2><?php the_title(); ?></h2>	
 								<br>
-								<div class="news-content">
-									<p class="news-content"><?php the_content(); ?></p>
+								<?php 
+
+									global $wpdb;
+									$table_name = $wpdb->prefix . 'aatest';
+
+									$sql = "SELECT tagged_content FROM (
+										SELECT *
+										FROM $table_name
+									    WHERE post_ID= $origin_id
+									    ORDER BY time DESC
+									    LIMIT 1) as tpost";
+
+									$tagged_post = $wpdb->get_var( $sql );
+									// echo $tagged_post;
+									// var_dump($tagged_post);
+									// print_r($tagged_post);
+
+									$decoded = json_decode($tagged_post);
+
+									$taggedSpans = "";
+
+									// create spans with tag as class
+									foreach ($decoded as $element) {
+										$text = $element[0];
+										$tag = $element[1];
+
+									    // if text is punctuation, do not add class
+									    $punct = array(".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", "`", "\"");
+									    if (in_array ( $text , $punct)){
+									        $span = ("<span>" . $text . "</span>");
+									    }
+										else{ // add class and a space 
+											$span = ('<span class="' . $tag . '"> ' . $text . '</span>');
+										}
+										// echo $span;
+										$taggedSpans .= $span; 
+
+									}
+
+									echo $taggedSpans;
+								?>
+
 								</div>
 							</div>  <!-- .article-view -->
 
 					<?php 
-						
+						/*
 						$post_id = $origin_id; // defined above 
 
 						// get the content and prepare it for the tagger 
 						$content_post = get_post($post_id);
 						$content = $content_post->post_content;
 
-						print_r($content);
+						//print_r($content);
 
 						$content = apply_filters('the_content', $content);
 						$content = str_replace(']]>', ']]&gt;', $content);
 
-						print_r($content);
+						//print_r($content);
 
 						// run tagger
 						include 'tagger.php';
 						$tagged_text = aa_tag_the_content( $content );
-						$posArrays = aa_build_pos_arrays( $tagged_text );
 
 						print_r($tagged_text);
 						print_r($posArrays);
@@ -253,14 +292,8 @@ get_header(); ?>
 								'adverbs' => json_encode($posArrays[3]),
 								)
 							);
-
+					*/
 					?>
-
-
-
-
-
-
 
 							<?php 
 								$dirname=  dirname( get_bloginfo('stylesheet_url') ) ;
