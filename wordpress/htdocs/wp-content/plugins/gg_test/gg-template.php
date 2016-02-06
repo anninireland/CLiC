@@ -1,7 +1,7 @@
 <?php
 /**
 
-Template Name: WP_Query Template
+Template Name: Grammar Guru Template
 This is the template for the Grammar Guru game 
 
  */
@@ -21,7 +21,7 @@ get_header(); ?>
 				// resets data to allow a custom loop 
 				wp_reset_postdata();
 
-				if (isset( $origin_id)){
+				function gg_prepare_game(){
 
 					// queries the post by id, sets results to be just 1 post
 					$query = new WP_Query( array( 
@@ -73,7 +73,7 @@ get_header(); ?>
 				// ** Here is the main content of the page ** //
 				if ( have_posts() && isset( $origin_id ) ) : 
 
-					//gg_prepare_game(); // calls function to get game data 
+					gg_prepare_game(); // calls function to get game data 
 
 					while ( $query->have_posts() ) : $query->the_post(); 
 						if ( isset( $origin_id )){
@@ -85,7 +85,7 @@ get_header(); ?>
 
 
 									<h2>Your challenge:</h2>
-									<h2>Find <span class="findThis">three <span id='game'><?php echo $game; ?> </span></span> in this article.</h2>
+									<h2>Find <span class="findThis">three <?php echo $game; ?></span> in this article.</h2>
 									<h3>Click on a word to select it;</h3>
 									<h3>To remove it, click again</h3>
 									<input class="helpButton" type="button" value="Help!" /> 

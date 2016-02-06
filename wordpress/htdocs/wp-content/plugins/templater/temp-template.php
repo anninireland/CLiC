@@ -85,7 +85,7 @@ get_header(); ?>
 
 
 									<h2>Your challenge:</h2>
-									<h2>Find <span class="findThis">three <span id='game'><?php echo $game; ?> </span></span> in this article.</h2>
+									<h2>Find <span class="findThis">three <?php echo $game; ?></span> in this article.</h2>
 									<h3>Click on a word to select it;</h3>
 									<h3>To remove it, click again</h3>
 									<input class="helpButton" type="button" value="Help!" /> 

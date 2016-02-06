@@ -1,16 +1,8 @@
 <?php
 
 /******************
-* display
+* display Grammar Guru Menu 
 *******************/
-
-
-
-function echoPostID(){
-	$ID = get_the_ID();
-	return "Post ID: " .$ID;
- }
-
 
 // adds content to posts/pages 
 function gg_add_content($content) {

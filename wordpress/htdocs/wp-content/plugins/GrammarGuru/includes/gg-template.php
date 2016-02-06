@@ -1,7 +1,7 @@
 <?php
 /**
 
-Template Name: WP_Query Template
+Template Name: Grammar Guru Template
 This is the template for the Grammar Guru game 
 
  */
@@ -71,7 +71,7 @@ get_header(); ?>
 
 				// Start the custom loop.
 				// ** Here is the main content of the page ** //
-				if ( have_posts() && isset( $origin_id ) ) : 
+				if ( have_posts() ) : 
 
 					//gg_prepare_game(); // calls function to get game data 
 
@@ -85,7 +85,7 @@ get_header(); ?>
 
 
 									<h2>Your challenge:</h2>
-									<h2>Find <span class="findThis">three <span id='game'><?php echo $game; ?> </span></span> in this article.</h2>
+									<h2>Find <span class="findThis">three <span id='game'><?php echo $game; ?></span> </span> in this article.</h2>
 									<h3>Click on a word to select it;</h3>
 									<h3>To remove it, click again</h3>
 									<input class="helpButton" type="button" value="Help!" /> 
@@ -145,7 +145,7 @@ get_header(); ?>
 
 								<div id="success-view" class="side-view">
 									<h1>Well Done! </h1>
-									<h2>All of your words are <?php $game ?></h2>
+									<h2>All of your words are correct</h2>
 									<ul class="matched-words"></ul>
 									<p>You have earned a STAR! </p>
 									<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
@@ -186,6 +186,27 @@ get_header(); ?>
 
 
 <?php 	
+
+// loads scripts for template 
+function add_gg_scripts() {
+	
+	wp_register_script( 'gg_page_js', plugin_dir_url( __FILE__ ) . '/js/ggFunctions.js', array( 'jquery' ), true );
+	wp_enqueue_script( 'gg_page_js' );
+	wp_enqueue_script( 'jquery' );
+
+	wp_register_style( 'gg-style', plugin_dir_url( __FILE__ ) . 'css/gg-style.css' );
+	wp_enqueue_style( 'gg-style' );
+
+}
+add_action('wp_enqueue_scripts', 'add_gg_scripts');
+
+
+
+
+
+
+
+
 	/*
 	if(isset($_POST['submit'])){
 		$name_entered = $_POST['name'];
