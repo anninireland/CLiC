@@ -35,6 +35,42 @@ include('includes/data-processing.php'); // this controls all saving of data
 include('includes/display-functions.php');  // content display functions
 
 
+/******************
+* database set up 
+*******************/
+
+
+global $gg_db_version;
+$gg_db_version = '1.0';
+
+function gg_activate() {
+	global $wpdb;
+	global $gg_db_version;
+
+	$table_name = $wpdb->prefix . 'gg_tagged';
+	
+	$charset_collate = $wpdb->get_charset_collate();
+
+	$sql = "CREATE TABLE $table_name (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+		post_ID mediumint(9) NOT NULL,
+		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		post_title VARCHAR(100) NOT NULL,
+		post_content TEXT NOT NULL,
+		tagged_content TEXT NOT NULL,
+
+		UNIQUE KEY id (id)
+	) $charset_collate;";
+
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+
+	add_option( 'gg_db_version', $gg_db_version );
+}
+
+register_activation_hook( __FILE__, 'gg_activate' );
+
+
 
 /******************
 * test area

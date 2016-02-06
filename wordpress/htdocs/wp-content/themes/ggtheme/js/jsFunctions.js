@@ -58,10 +58,22 @@ $('.doneButton').click(function() {
   else {
 
 
+    var possibleTags = [];
+
+
     // check answers and add to appropriate list 
     $('.highlighted').each(function() {
       console.log(this);
-      if( $(this).hasClass("NN") ){ 
+
+    // check what game is being played 
+    switch( $('#game').text() ){
+      case "nouns":
+
+      if(($(this).hasClass("NN")) || 
+        ($(this).hasClass("NNS")) ||  
+        ($(this).hasClass("NNP")) ||  
+        ($(this).hasClass("NNPS")) 
+        ){ 
         // match found 
         matchedWords.push( $(this).text() );
       }
@@ -69,6 +81,64 @@ $('.doneButton').click(function() {
         // not matched 
         unmatchedWords.push( $(this).text() );
       }
+
+       // possibleTags = [ "NN", "NNS", "NNP", "NNPS" ];
+        break;
+      case "verbs":
+        possibleTags = [ "VB", "VBD", "VBG", "VBN", "VBP", "VBZ" ];
+
+
+      if(($(this).hasClass("VB")) || 
+        ($(this).hasClass("VBD")) ||  
+        ($(this).hasClass("VBG")) ||  
+        ($(this).hasClass("VBN")) || 
+        ($(this).hasClass("VBP")) || 
+        ($(this).hasClass("VBZ")) 
+        ){ 
+        // match found 
+        matchedWords.push( $(this).text() );
+      }
+      else {
+        // not matched 
+        unmatchedWords.push( $(this).text() );
+      }
+
+        break;
+      case "adjectives":
+        possibleTags = [ "JJ", "JJR", "JJS" ];
+
+      if(($(this).hasClass("JJ")) || 
+        ($(this).hasClass("JJR")) ||  
+        ($(this).hasClass("JJS")) 
+        ){ 
+        // match found 
+        matchedWords.push( $(this).text() );
+      }
+      else {
+        // not matched 
+        unmatchedWords.push( $(this).text() );
+      }
+
+        break;
+      case "adverbs":
+        possibleTags = [ "RB", "RBR", "RBS" ];
+
+
+      if(($(this).hasClass("RB")) || 
+        ($(this).hasClass("RBR")) ||  
+        ($(this).hasClass("RBS")) 
+        ){ 
+        // match found 
+        matchedWords.push( $(this).text() );
+      }
+      else {
+        // not matched 
+        unmatchedWords.push( $(this).text() );
+      }
+
+        break;
+    }
+
     });
 
     // empty the word lists ** IMPORTANT ** 

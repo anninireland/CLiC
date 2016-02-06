@@ -8,16 +8,98 @@ Version:        1.0
 
 @import url(../twentyfifteen/style.css);
 
-#highlighter 
+.article-box
 {
-	position: absolute;
-	right: 40px;
-	width: 150px;
+	background-color: SkyBlue;
+}
+.content-area
+{
+	line-height: 1.4; 
+	margin: 1em; 
+	padding: 1em; 
 }
 
-.NNP{
-	color: green;
+#ggmain h1
+{
+	font-size: 150%;
+	color:Purple;
 }
+#ggmain h2
+{
+	font-size: 125%;
+}
+
+#ggmain span:hover
+{
+	cursor: pointer;
+}
+
+.side-view {
+	margin: 1em;
+	padding: 2em;
+	color: black;
+	text-align: center;
+}
+
+#article-view {
+	margin: 1em;
+	padding: 2em;
+	color: black;
+}
+#text
+{
+	float: left;
+	width: 70%;
+}
+#highlighter 
+{
+	float: right;
+	width: 25%;
+}
+
+
+.findThis 
+{
+	color: Blue;
+}
+
+.highlighted
+{
+	background-color: yellow;
+}
+#results-view
+{
+  display: none;
+  text-align: center;
+	padding: 2em;
+}
+#success-view
+{
+  display: none;
+  text-align: center;
+	padding: 2em;
+}
+#almost-view
+{
+  display: none;
+  text-align: center;
+	padding: 2em;
+}
+
+#help-view
+{
+	display: none;
+	text-align: center;
+	padding: 2em;
+}
+
+#challenge-text
+{
+	float: left;
+	width: 70%;
+	padding: 2em;
+}
+
 .selected-words {
 	list-style-type: none;
 }
@@ -30,86 +112,7 @@ ul.unmatched-words {
 	list-style-image: url('assets/x-mark-red-th.png');
 }
 
-.side-view {
-	border-style: solid;
-	border-width: 2px;
-	border-color: grey;
-	margin: 1em;
-	padding: 1em;
-	color: black;
-	text-align: center;
-}
-
-#article-view {
-	margin: 1em;
-	padding: 1em;
-	color: black;
-}
-#test {
-	line-height: 1.2; 
-	margin: 1em; 
-	padding: 1em; 
-	color:black;
-	background: #B79EE0;
-}
-#ggmain 
-{
-	line-height: 1.2; 
-	margin: 1em; 
-	padding: 1em; 
-	color:white;
-	background: #9EDEE0;
-}
-
-#ggmain h1
-{
-	font-size: 150%;
-}
-#ggmain h2
-{
-	font-size: 125%;
-}
-
-#ggmain span:hover
-{
-	cursor: pointer;
-}
-
-.findThis 
-{
-	color: red;
-}
-
-.highlighted
-{
-	background-color: yellow;
-}
-#results-view
-{
-  display: none;
-  text-align: center;
-}
-#success-view
-{
-  display: none;
-  text-align: center;
-}
-#almost-view
-{
-  display: none;
-  text-align: center;
-}
-
-
-
-#help-view
-{
-	display: none;
-	text-align: center;
-}
-
 .mark
 {
 	color: red;
 }
-

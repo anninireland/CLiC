@@ -18,16 +18,9 @@ get_header(); ?>
 				// parses the resulting string into variables 
 				parse_str($query_str);
 
-				// add check if query exisits. If not, display message
-			?>
-			
-			
-			<?php 
 				// sets link for 'quit' button
 				$link = get_permalink( $post = $origin_id ); 
-			?>
 
-			<?php
 				// resets data to allow a custom loop 
 				wp_reset_postdata();
 
@@ -36,9 +29,44 @@ get_header(); ?>
 					'p' => $origin_id, 
 					'posts_per_page' => 1
 					) );
-			?>
 
-			<?php
+								
+				// get tagged content from wpdb 
+				global $wpdb;
+				$table_name = $wpdb->prefix . 'gg_tagged';
+				$sql = "SELECT tagged_content FROM (
+					SELECT *
+					FROM $table_name
+				    WHERE post_ID= $origin_id
+				    ORDER BY time DESC LIMIT 1) as tpost";
+				$tagged_post = $wpdb->get_var( $sql ); // database query 
+				$decoded = json_decode($tagged_post); // decode the json encoded array
+
+				$taggedSpans = "";
+
+				// create spans with tag as class
+				foreach ($decoded as $element) {
+					$text = $element[0];
+					$tag = $element[1];
+					
+					// skip any <p> tags with p> 
+					if ( strpos($text, "p>")) {
+						continue;
+					}
+
+				    // if text is punctuation, do not add class
+				    $punct = array(".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", "`", "\"");
+				    if (in_array ( $text , $punct)){
+				        $span = ("<span>" . $text . "</span>");
+
+				    }
+					else{ // add class and a space 
+						$span = ('<span class="' . $tag . '"> ' . $text . '</span>');
+					}
+					$taggedSpans .= $span; 
+				}
+				
+
 				// Start the custom loop.
 
 				// ** Here is the main content of the page ** //
@@ -47,16 +75,10 @@ get_header(); ?>
 					while ( $query->have_posts() ) : $query->the_post(); ?>
 
 						<div id="ggmain">			
-
 							<h1>Grammar Guru</h1>
-
 							<div id="challenge-view" class="side-view">
 
-								<!-- What's up with this path ??  FIX LATER 
-								<img src= "<?php echo get_stylesheet_directory(); ?>\assets\yellowhighlighter.png"> -->
 
-								<img id="highlighter" src="http://www.iainball.com/psd-yellow-highlighter-pen-icon.png"/>
-								
 								<h2>Your challenge:</h2>
 								<h2>Find <span class="findThis">three <?php echo $game; ?></span> in this article.</h2>
 								<h3>Click on a word to select it;</h3>
@@ -105,20 +127,6 @@ get_header(); ?>
 								<input class="doneButton" type="button" name="done" value="I'm Done" />
 							</div>  <!-- .help-view -->
 
-
-							<div id="results-view" class="side-view">
-								<!--
-								<?php // if success, show "Well Done!", else show "Almost!" ?>
-								<h1>Results! </h1>
-								<h2>You selected these words: </h2>
-								<ul class="selected-words"></ul>
-								<?php // if success, show Star, else show tryagain button ?>
-								<input class="tryagainButton" type="button" value="Try Again" />
-								<a href="<?php //echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
-								<br>
-								-->
-							</div>  <!-- .results-view -->
-
 							<div id="almost-view" class="side-view">
 								<h1>Nice effort!</h1>
 								<h2><span id="numCorrect"></span> correct out of 3</h2>
@@ -130,8 +138,6 @@ get_header(); ?>
 								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
 							</div>  <!-- .almost-view -->
 
-
-
 							<div id="success-view" class="side-view">
 								<h1>Well Done! </h1>
 								<h2>All of your words are <?php $game ?></h2>
@@ -140,69 +146,16 @@ get_header(); ?>
 								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
 							</div>  <!-- .success-view -->
 
-
 							<div id="article-view" class="">
 								<h2><?php the_title(); ?></h2>	
 								<br>
+								<p id="text" class="news-content"><?php echo $taggedSpans ?></p>
+								<!-- What's up with this path ??  FIX LATER 
+								<img src= "<?php echo get_stylesheet_directory(); ?>\assets\yellowhighlighter.png"> -->
+								<img id="highlighter" src="http://www.iainball.com/psd-yellow-highlighter-pen-icon.png"/>
 								
-								<?php 
-									// get tagged content from wpdb 
-									global $wpdb;
-									$table_name = $wpdb->prefix . 'aatest';
-									$sql = "SELECT tagged_content FROM (
-										SELECT *
-										FROM $table_name
-									    WHERE post_ID= $origin_id
-									    ORDER BY time DESC
-									    LIMIT 1) as tpost";
-									$tagged_post = $wpdb->get_var( $sql ); // database query 
-									$decoded = json_decode($tagged_post); // decode the json encoded array
 
-									$taggedSpans = "";
-
-									// create spans with tag as class
-									foreach ($decoded as $element) {
-										$text = $element[0];
-										$tag = $element[1];
-										
-										// remove any <p> tags with p> 
-										if ( strpos($text, "p>")) {
-											continue;
-										}
-
-									    // if text is punctuation, do not add class
-									    $punct = array(".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", "`", "\"");
-									    if (in_array ( $text , $punct)){
-									        $span = ("<span>" . $text . "</span>");
-									    }
-										else{ // add class and a space 
-											$span = ('<span class="' . $tag . '"> ' . $text . '</span>');
-										}
-										$taggedSpans .= $span; 
-									}
-									echo $taggedSpans;
-								?>
-<p class="news-content"><?php echo $taggedSpans ?></p>
-								</div>
 							</div>  <!-- .article-view -->
-
-							<?php 
-								$dirname=  dirname( get_bloginfo('stylesheet_url') ) ;
-								// echo $dirname;
-								// var_dump($dirname);
-							?> 
-
-							<script>
-								var templateDir = '<?php dirname( get_bloginfo("stylesheet_url") ) ?>';
-							</script>
-
-
-							<!-- 
-							<form method="post" action=<?php gg_save_record() ?> >
-							Enter your name: <input type="text" name="name"/> 
-							<input type="submit" value="Click Me"/> 
-							</form>
-							-->
 
 						</div> <!-- .ggmain -->
 

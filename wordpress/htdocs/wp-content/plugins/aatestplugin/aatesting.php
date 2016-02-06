@@ -100,23 +100,18 @@ function aa_get_pos_data( $post_id ) {
 add_action( 'save_post', 'aa_get_pos_data' );
 
 function bb_tag_the_content( $sentence ){
-
-	$time_start = microtime(true);
 	// sets DIR path variable
 	$dir = dirname(__FILE__);
 	// loads tagger
 	include($dir.'/PHP-Stanford-NLP/autoload.php');
 	// creates tagger
 	$pos = new \StanfordNLP\POSTagger(
-	  ($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/models/english-left3words-distsim.tagger'),
-	($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/stanford-postagger.jar')
-	);
+	  ($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/models/english-left3words-distsim.tagger'), 
+	  ($dir.'/PHP-Stanford-NLP/stanford-postagger-2015-04-20/stanford-postagger.jar'));
 	// calls tagger to tag the_content 
 	// $result = $pos->tag(explode(' ', get_the_content() )); //  *** change back to this in production *** 
 
 	$result = $pos->tag(explode(' ', $sentence ));
-
-	// echo json_encode($result);
 	return $result;
 
 }
