@@ -9,37 +9,37 @@ This is the template for the Grammar Guru game
 
 get_header(); ?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
 
-			<?php 
+		<?php 
 				// parses the url and takes the query data
-				$query_str = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		$query_str = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 				// parses the resulting string into variables 
-				parse_str($query_str);
+		parse_str($query_str);
 
 				// resets data to allow a custom loop 
-				wp_reset_postdata();
+		wp_reset_postdata();
 
-				if (isset( $origin_id)){
+		if (isset( $origin_id)){
 
 					// queries the post by id, sets results to be just 1 post
-					$query = new WP_Query( array( 
-						'p' => $origin_id, 
-						'posts_per_page' => 1
-						) );
+			$query = new WP_Query( array( 
+				'p' => $origin_id, 
+				'posts_per_page' => 1
+				) );
 
 					// sets link for 'quit' button
-					$link = get_permalink( $post = $origin_id ); 
-									
+			$link = get_permalink( $post = $origin_id ); 
+
 					// get tagged content from wpdb 
-					global $wpdb;
-					$table_name = $wpdb->prefix . 'gg_tagged';
-					$sql = "SELECT tagged_content FROM (
-						SELECT *
-						FROM $table_name
-					    WHERE post_ID= $origin_id
-					    ORDER BY time DESC LIMIT 1) as tpost";
+			global $wpdb;
+			$table_name = $wpdb->prefix . 'gg_tagged';
+			$sql = "SELECT tagged_content FROM (
+				SELECT *
+				FROM $table_name
+				WHERE post_ID= $origin_id
+				ORDER BY time DESC LIMIT 1) as tpost";
 					$tagged_post = $wpdb->get_var( $sql ); // database query 
 					$decoded = json_decode($tagged_post); // decode the json encoded array
 
@@ -56,11 +56,15 @@ get_header(); ?>
 						}
 
 					    // if text is punctuation, do not add class
-					    $punct = array(".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", "`", "\"");
-					    if (in_array ( $text , $punct)){
-					        $span = ("<span>" . $text . "</span>");
-
-					    }
+						$final_punct = array(".", ",", ";", ":", "!", "?", ")", "]", "}", "'", "`", "\"");
+						$punct = array("(", "[", "{", "'", "`", "\"");
+						if (in_array ( $text , $final_punct)){
+							$span = ("<span>" . $text . " </span>");
+							
+						}
+						elseif (in_array ( $text , $punct)){
+							$span = ("<span>" . $text . "</span>");
+						}
 						else{ // add class and a space 
 							$span = ('<span class="' . $tag . '"> ' . $text . '</span>');
 						}
@@ -76,135 +80,114 @@ get_header(); ?>
 					//gg_prepare_game(); // calls function to get game data 
 
 					while ( $query->have_posts() ) : $query->the_post(); 
-						if ( isset( $origin_id )){
+				if ( isset( $origin_id )){
+					?>
+
+					<div id="ggmain">			
+						<h1>Grammar Guru</h1>
+
+						<div id="challenge-view" class="side-view">
+							<h2>Your challenge:</h2>
+							<h2>Find <span class="findThis">three <span id='game'><?php echo $game; ?></span> </span> in this article.</h2>
+							<h3>Click on a word to select it;</h3>
+							<h3>To remove it, click again</h3>
+							<input class="helpButton" type="button" value="Help!" /> 
+							<input class="doneButton" type="button" name="done" value="I'm Done" />
+						</div>  <!-- .challenge-view -->
+
+						<div id="help-view" class="side-view">
+							<?php 
+							switch ($game) {
+								case "nouns": ?>
+								<h3><span class="mark">Nouns</span> are words that name an object or person</h3>
+								<br>
+								<p>The broad <span class="mark">river</span> is flowing swiftly.</p>
+								<?php ;
+								break;
+
+								case "verbs": ?>
+								<h3><span class="mark">Verbs</span> are words that tell the state or action of the subject.</h3>
+								<br>
+								<p>The broad river is <span class="mark">flowing</span> swiftly.</p>
+								<?php ;
+								break;
+
+								case "adjectives": ?>
+								<h3><span class="mark">Adjectives</span> are words used to describe and give more information about a noun, which could be a person, place or object.</h3>
+								<br>
+								<p>The <span class="mark">large</span> box is on the shelf.</p>
+								<p>She held the <span class="mark">shiny</span> penny.</p>
+								<p>The sun shone <span class="mark">bright</span> in the <span class="mark">blue</span> sky.</p>
+								<p>I have <span class="mark">five</span> books.</p>
+								<p>The <span class="mark">broad</span> river is flowing swiftly.</p>
+								<?php ;
+								break;
+
+								case "adverbs": ?>
+								<h3><span class="mark">Adverbs</span> are words that describe or give more information about a verb.</h3>
+								<br>
+								<p>The broad river is flowing <span class="mark">swiftly</span>.</p>
+								<?php ;
+								break;
+							}
 							?>
+							<input class="closehelpButton" type="button" value="close" />
+							<input class="doneButton" type="button" name="done" value="I'm Done" />
+						</div>  <!-- .help-view -->
 
-							<div id="ggmain">			
-								<h1>Grammar Guru</h1>
-								<div id="challenge-view" class="side-view">
+						<div id="almost-view" class="side-view">
+							<h1>Nice effort!</h1>
+							<h2><span id="numCorrect"></span> <?php echo $game ?> correct out of 3</h2>
+							<div class="selected">
+								<ul class="matched-words"></ul>
+								<ul class="unmatched-words"></ul>
+							</div>
+							<p>You need all 3 <?php echo $game ?> correct to earn a star.<br>
+								Would you like to try again?</p>
+								<input class="tryagainButton" type="button" value="Try Again" />
+								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
+							</div>  <!-- .almost-view -->
 
-
-									<h2>Your challenge:</h2>
-									<h2>Find <span class="findThis">three <span id='game'><?php echo $game; ?></span> </span> in this article.</h2>
-									<h3>Click on a word to select it;</h3>
-									<h3>To remove it, click again</h3>
-									<input class="helpButton" type="button" value="Help!" /> 
-									<input class="doneButton" type="button" name="done" value="I'm Done" />
-								</div>  <!-- .challenge-view -->
-
-								<div id="help-view" class="side-view">
-									<?php 
-									switch ($game) {
-										case "nouns": ?>
-												<h3><span class="mark">Nouns</span> are words that name an object or person</h3>
-												<br>
-												<p>The broad <span class="mark">river</span> is flowing swiftly.</p>
-											<?php ;
-											break;
-
-										case "verbs": ?>
-												<h3><span class="mark">Verbs</span> are words that tell the state or action of the subject.</h3>
-												<br>
-												<p>The broad river is <span class="mark">flowing</span> swiftly.</p>
-											<?php ;
-											break;
-
-										case "adjectives": ?>
-												<h3><span class="mark">Adjectives</span> are words used to describe and give more information about a noun, which could be a person, place or object.</h3>
-												<br>
-												<p>The <span class="mark">large</span> box is on the shelf.</p>
-												<p>She held the <span class="mark">shiny</span> penny.</p>
-												<p>The sun shone <span class="mark">bright</span> in the <span class="mark">blue</span> sky.</p>
-												<p>I have <span class="mark">five</span> books.</p>
-												<p>The <span class="mark">broad</span> river is flowing swiftly.</p>
-												<?php ;
-											break;
-
-										case "adverbs": ?>
-												<h3><span class="mark">Adverbs</span> are words that describe or give more information about a verb.</h3>
-												<br>
-												<p>The broad river is flowing <span class="mark">swiftly</span>.</p>
-											<?php ;
-											break;
-									}
-									?>
-									<input class="closehelpButton" type="button" value="close" />
-									<input class="doneButton" type="button" name="done" value="I'm Done" />
-								</div>  <!-- .help-view -->
-
-								<div id="almost-view" class="side-view">
-									<h1>Nice effort!</h1>
-									<h2><span id="numCorrect"></span> correct out of 3</h2>
+							<div id="success-view" class="side-view">
+								<h1>Well Done! </h1>
+								<h2>All of your words are correct</h2>
+								<div class="selected">
 									<ul class="matched-words"></ul>
-									<ul class="unmatched-words"></ul>
-									<p>You need all 3 words correct to earn a star</p>
-									<p>Would you like to try again?</p>
-									<input class="tryagainButton" type="button" value="Try Again" />
-									<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
-								</div>  <!-- .almost-view -->
+								</div>
+								<p>You have earned a STAR! </p>
+								<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
+							</div>  <!-- .success-view -->
 
-								<div id="success-view" class="side-view">
-									<h1>Well Done! </h1>
-									<h2>All of your words are correct</h2>
-									<ul class="matched-words"></ul>
-									<p>You have earned a STAR! </p>
-									<a href="<?php echo $link ?>"><input class="quitButton" type="button" value="Quit" /></a>
-								</div>  <!-- .success-view -->
+							<div id="highlighter-box"><img id="highlighter" src= "<?php echo plugin_dir_url( __FILE__ ) . 'images/psd-yellow-highlighter-pen-icon.png'?>"></div>
 
-								<div id="article-view" class="">
-									<h2><?php the_title(); ?></h2>	
-									<br>
-									<p id="text" class="news-content"><?php echo $taggedSpans ?></p>
-									<!-- What's up with this path ??  FIX LATER 
-									<img src= "<?php echo get_stylesheet_directory(); ?>\assets\yellowhighlighter.png"> -->
-									<img id="highlighter" src="http://www.iainball.com/psd-yellow-highlighter-pen-icon.png"/>
-									
 
-								</div>  <!-- .article-view -->
+							<div id="article-view" class="">
+								<h2><?php the_title(); ?></h2>	
+								<br>
+								<p id="text" class="news-content"><?php echo $taggedSpans ?></p>
+							</div>  <!-- .article-view -->
 
-							</div> <!-- .ggmain -->
+						</div> <!-- .ggmain -->
 
 						<?php 
-						}
+					}
 					endwhile; 
-				else: 
-					?>
+					else: 
+						?>
 					<p>No content available</p>
 
 					<p><strong>Want to play Grammar Guru? </strong><br>
-					<p>Look for the Grammar Guru menu at the end of news stories.</p>
+						<p>Look for the Grammar Guru menu at the end of news stories.</p>
 
-				<?php 
-				endif; 
-				?>
-
-
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
-<?php get_footer(); ?>
+						<?php 
+						endif; 
+						?>
 
 
-<?php 	
+					</main><!-- .site-main -->
+				</div><!-- .content-area -->
 
-// loads scripts for template 
-function add_gg_scripts() {
-	
-	wp_register_script( 'gg_page_js', plugin_dir_url( __FILE__ ) . '/js/ggFunctions.js', array( 'jquery' ), true );
-	wp_enqueue_script( 'gg_page_js' );
-	wp_enqueue_script( 'jquery' );
-
-	wp_register_style( 'gg-style', plugin_dir_url( __FILE__ ) . 'css/gg-style.css' );
-	wp_enqueue_style( 'gg-style' );
-
-}
-add_action('wp_enqueue_scripts', 'add_gg_scripts');
-
-
-
-
-
-
+				<?php get_footer(); 
 
 
 	/*
@@ -228,4 +211,4 @@ add_action('wp_enqueue_scripts', 'add_gg_scripts');
 		///echo "Saved!";
 	}
 	*/
-?>
+	?>

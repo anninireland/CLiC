@@ -4,43 +4,6 @@
 * data processing
 *******************/
 
-global $gg_db_version;
-$gg_db_version = '1.0';
-
-
-
-function gg_install() {
-	global $wpdb;
-	global $gg_db_version;
-
-	$table_name = $wpdb->prefix . 'gg_tagged';
-	
-	$charset_collate = $wpdb->get_charset_collate();
-
-	$sql = "CREATE TABLE $table_name (
-		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		post_ID mediumint(9) NOT NULL,
-		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		post_title VARCHAR(100) NOT NULL,
-		post_content TEXT NOT NULL,
-		tagged_content LONGTEXT NOT NULL,
-
-		UNIQUE KEY id (id)
-	) $charset_collate;";
-
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta( $sql );
-
-	add_option( 'gg_db_version', $gg_db_version );
-}
-
-register_activation_hook( __FILE__, 'gg_install' );
-
-// ********* LATER *************
-// need function to run on activation that will schedule all posts to be added to the table 
-
-
-// set this function inside a scheduled task  ///
 /*
 function to run whenever a post is saved 
 */
@@ -55,8 +18,6 @@ function gg_get_pos_data( $post_id ) {
 		$content = $content_post->post_content;
 		$content = apply_filters('the_content', $content);
 		$content = str_replace(']]>', ']]&gt;', $content);
-
-		// NOT removing all! $text_content = preg_replace('(\[caption.*?[\/caption])', '', $content); // removes image and caption
 
 		$text_content = preg_replace('(\[.*?\]|\<.*?\>)', '', $content); // removes characters between and including [] and <> 
 		$sentenceArray = preg_split('/(?<=[.?!])\s+(?=[a-z])/i', $text_content); // splits content into and array of sentences
@@ -110,3 +71,7 @@ function gg_tag_the_content( $sentence ){
 	$result = $pos->tag(explode(' ', $sentence ));
 	return $result;
 }
+
+// ********* LATER *************
+// need function to run on activation that will schedule all posts to be added to the table 
+// set this function inside a scheduled task  ///

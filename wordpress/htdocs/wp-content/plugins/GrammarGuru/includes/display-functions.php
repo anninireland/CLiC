@@ -21,8 +21,6 @@ function gg_add_content($content) {
 		<div class="gg-menu">
 		<h3 class="ggtext">Grammar Guru</h3>
 		<h5 class="ggtext">What would you like to practice? </h5>
-		<form id="gg_menu">
-
 		<a class="click" id="nouns" href="' .$url. '/grammar-guru/?origin_id=' .$ID. '&game=nouns">Nouns</a> 
 		<a class="click" id="verbs" href="' .$url. '/grammar-guru/?origin_id=' .$ID. '&game=verbs">Verbs</a> 
 		<a class="click" id="adjectives" href="' .$url. '/grammar-guru/?origin_id=' .$ID. '&game=adjectives">Adjectives</a> 
@@ -34,10 +32,10 @@ function gg_add_content($content) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'gg_tagged';
 		$sql = "SELECT tagged_content FROM (
-		SELECT *
-		FROM $table_name
-	    WHERE post_ID= $ID
-	    ORDER BY time DESC LIMIT 1) as tpost";
+			SELECT *
+			FROM $table_name
+			WHERE post_ID= $ID
+			ORDER BY time DESC LIMIT 1) as tpost";
 		$has_tagged_info = $wpdb->get_results ( $sql ); // database query 
 
 
@@ -51,7 +49,3 @@ function gg_add_content($content) {
 
 // this filter is essential to employ the function above! 
 add_filter('the_content', 'gg_add_content');
-
-
-
-

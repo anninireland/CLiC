@@ -1,12 +1,3 @@
-/*
-Theme Name:     Grammar Guru Theme
-Description:    Child theme for the Twenty Fifteen theme 
-Author:         Lisa Cavern 
-Template:       twentyfifteen
-Version:        1.0
-*/
-
-@import url(../twentyfifteen/style.css);
 
 .article-box
 {
@@ -34,30 +25,81 @@ Version:        1.0
 	cursor: pointer;
 }
 
-.side-view {
-	margin: 1em;
-	padding: 2em;
-	color: black;
-	text-align: center;
-}
 
 #article-view {
 	margin: 1em;
-	padding: 2em;
 	color: black;
 }
 #text
 {
 	float: left;
-	width: 70%;
+
+}
+.highlighter-box 
+{
+	float: right;
+	width: 30%;
 }
 #highlighter 
 {
-	float: right;
-	width: 25%;
+
+	vertical-align: middle;
+	width: 30%;
+}
+.side-view
+{
+	text-align: center;
+	margin-top: 1em;
+	width: 70%;
+	float: left;
+}
+#challenge-view 
+{
+	margin-bottom: 2em;
+}
+#success-view
+{
+	display: none;
+	margin-bottom: 1em;
+	line-height: 1.2;
+}
+#almost-view
+{
+	display: none;
+	margin-bottom: 1em;
+	line-height: 1.2;
+}
+#help-view 
+{
+	display: none;
+	margin-bottom: 2em;
 }
 
 
+.selected-words {
+	list-style-type: none;
+}
+
+.selected {
+	width: 30%;
+	text-align: left;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+ul.matched-words {
+	list-style-image: url('r_check-mark-md.png');
+	margin-bottom: 0;
+}
+
+ul.unmatched-words {
+	list-style-image: url('x-mark-red-th.png');
+}
+
+.mark
+{
+	color: red;
+}
 .findThis 
 {
 	color: Blue;
@@ -66,53 +108,4 @@ Version:        1.0
 .highlighted
 {
 	background-color: yellow;
-}
-#results-view
-{
-  display: none;
-  text-align: center;
-	padding: 2em;
-}
-#success-view
-{
-  display: none;
-  text-align: center;
-	padding: 2em;
-}
-#almost-view
-{
-  display: none;
-  text-align: center;
-	padding: 2em;
-}
-
-#help-view
-{
-	display: none;
-	text-align: center;
-	padding: 2em;
-}
-
-#challenge-text
-{
-	float: left;
-	width: 70%;
-	padding: 2em;
-}
-
-.selected-words {
-	list-style-type: none;
-}
-
-ul.matched-words {
-	list-style-image: url('assets/r_check-mark-md.png');
-}
-
-ul.unmatched-words {
-	list-style-image: url('assets/x-mark-red-th.png');
-}
-
-.mark
-{
-	color: red;
 }
